@@ -224,7 +224,7 @@ class ECSHandler(object):
 
 
 if __name__ == '__main__':
-    handler = ECSHandler('LTAInpnHZTLJSu0S', 'IQqg3P4hbjCxvV8OQkqci6OpOwxRzv', 'cn-hongkong')
+    handler = ECSHandler('L', 'I', 'cn-hongkong')
     instances, is_success, next_page = handler.get_instances(1)
     print instances
     print is_success
