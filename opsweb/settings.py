@@ -147,12 +147,12 @@ LOGIN_URL = "/login/"
 
 JUMP_PAGE = "jump.html"
 
-EMAIL_HOST = "smtp.exmail.qq.com"
+EMAIL_HOST = "smtp.qq.com"
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "sa-notice@yuanxin-inc.com"
-EMAIL_HOST_PASSWORD = "Miao13456"
+EMAIL_HOST_USER = "admin@anliming.com"
+EMAIL_HOST_PASSWORD = "anliming123"
 EMAIL_USE_SSL = True
-EMAIL_FROM = "sa-notice@yuanxin-inc.com"
+EMAIL_FROM = "admin@anliming.com"
 
 
 LOGGING = {
@@ -208,11 +208,11 @@ LOGGING = {
             "class": "logging.handlers.SMTPHandler",
             "level": "ERROR",
             "formatter": "simple",
-            "mailhost":("smtp.139.com", 25),
-            "fromaddr":"13260071987@139.com",
-            "toaddrs":["787696331@qq.com"],
+            "mailhost":("smtp..com", 25),
+            "fromaddr":".com",
+            "toaddrs":[".com"],
             "subject" : "devops mail",
-            "credentials" :("13260071987@139.com","yi15093547036")
+            "credentials" :("132.com","xxx")
         }
     },
 
