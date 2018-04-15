@@ -1,0 +1,109 @@
+[2018-04-12 17:55:15,595] [16486] [140335908910848] [      product.py:  78] [ERROR ] 用户admin 添加业务线验证失败:<ul class="errorlist"><li>dev_interface<ul class="errorlist"><li>这个字段是必填项。</li></ul></li><li>op_interface<ul class="errorlist"><li>这个字段是必填项。</li></ul></li></ul>
+[2018-04-12 17:56:58,136] [16486] [140335898420992] [     __init__.py:  84] [ERROR ] create user  error: Traceback (most recent call last):
+  File "/home/liuziping/opsweb/apps/dashboard/users/__init__.py", line 82, in post
+    res = {'code': 0, 'result': '添加用户 {0} 成功，用户名密码已经发送到 {1} 邮箱!'.format(name_cn, email)}
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 2-3: ordinal not in range(128)
+
+[2018-04-12 17:57:11,783] [16486] [140335898420992] [     __init__.py:  84] [ERROR ] create user  error: Traceback (most recent call last):
+  File "/home/liuziping/opsweb/apps/dashboard/users/__init__.py", line 72, in post
+    user.save()
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/contrib/auth/base_user.py", line 80, in save
+    super(AbstractBaseUser, self).save(*args, **kwargs)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 808, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 838, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 924, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 963, in _do_insert
+    using=using, raw=raw)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/query.py", line 1076, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/sql/compiler.py", line 1112, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/mysql/base.py", line 101, in execute
+    return self.cursor.execute(query, args)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/MySQLdb/cursors.py", line 205, in execute
+    self.errorhandler(self, exc, value)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+IntegrityError: (1062, "Duplicate entry 'kk' for key 'username'")
+
+[2018-04-12 17:58:40,923] [16486] [140335877179136] [     __init__.py:  84] [ERROR ] create user  error: Traceback (most recent call last):
+  File "/home/liuziping/opsweb/apps/dashboard/users/__init__.py", line 82, in post
+    res = {'code': 0, 'result': '添加用户 {0} 成功，用户名密码已经发送到 {1} 邮箱!'.format(name_cn, email)}
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 4-5: ordinal not in range(128)
+
+[2018-04-12 18:09:41,783] [16486] [140335887931136] [     __init__.py:  84] [ERROR ] create user  error: Traceback (most recent call last):
+  File "/home/liuziping/opsweb/apps/dashboard/users/__init__.py", line 72, in post
+    user.save()
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/contrib/auth/base_user.py", line 80, in save
+    super(AbstractBaseUser, self).save(*args, **kwargs)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 808, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 838, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 924, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/base.py", line 963, in _do_insert
+    using=using, raw=raw)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/query.py", line 1076, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/models/sql/compiler.py", line 1112, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/django/db/backends/mysql/base.py", line 101, in execute
+    return self.cursor.execute(query, args)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/MySQLdb/cursors.py", line 205, in execute
+    self.errorhandler(self, exc, value)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+IntegrityError: (1062, "Duplicate entry 'rock' for key 'username'")
+
+[2018-04-14 21:24:02,192] [26101] [139739497416448] [        views.py: 123] [ERROR ] insert Tasks  error: Traceback (most recent call last):
+  File "/home/liuziping/opsweb/apps/tasks/views.py", line 117, in post
+    playbook = AnsiblePlaybookAPI(task.playbook.path)
+  File "/home/liuziping/opsweb/apps/utils/ansible_api.py", line 16, in __init__
+    self.setbook = self.book_set()
+  File "/home/liuziping/opsweb/apps/utils/ansible_api.py", line 26, in book_set
+    runner_callbacks=runner_cb
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/ansible/playbook/__init__.py", line 157, in __init__
+    self.inventory    = ansible.inventory.Inventory(host_list)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/ansible/inventory/__init__.py", line 139, in __init__
+    raise errors.AnsibleError("Unable to find an inventory file, specify one with -i ?")
+AnsibleError: Unable to find an inventory file, specify one with -i ?
+
+[2018-04-14 21:24:26,024] [26101] [139739497416448] [        views.py: 123] [ERROR ] insert Tasks  error: Traceback (most recent call last):
+  File "/home/liuziping/opsweb/apps/tasks/views.py", line 117, in post
+    playbook = AnsiblePlaybookAPI(task.playbook.path)
+  File "/home/liuziping/opsweb/apps/utils/ansible_api.py", line 16, in __init__
+    self.setbook = self.book_set()
+  File "/home/liuziping/opsweb/apps/utils/ansible_api.py", line 26, in book_set
+    runner_callbacks=runner_cb
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/ansible/playbook/__init__.py", line 157, in __init__
+    self.inventory    = ansible.inventory.Inventory(host_list)
+  File "/home/liuziping/env2.7/lib/python2.7/site-packages/ansible/inventory/__init__.py", line 139, in __init__
+    raise errors.AnsibleError("Unable to find an inventory file, specify one with -i ?")
+AnsibleError: Unable to find an inventory file, specify one with -i ?
+
+[2018-04-15 10:30:14,876] [29784] [139948946593536] [     __init__.py:  55] [INFO  ] admin 新填加书成功
+[2018-04-15 10:30:27,961] [29784] [139948946593536] [     __init__.py:  55] [INFO  ] admin 新填加书成功

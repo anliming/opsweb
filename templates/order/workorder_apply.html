@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}工单申请{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">工单申请</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">工单申请</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+    <form method="post" action="{% url 'work_order:apply' %}" class="form-horizontal">
+        {% if errmsg %}
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ errmsg | safe }}
+            </div>
+        {% endif %}
+
+        <div class="form-group"><label class="col-sm-2 control-label">工单类型：</label>
+            <div class="col-sm-8">
+                {{ forms.type }}
+                {% if forms.type.errors %}<span  style="color:red">{{ forms.type.errors }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-group"><label class="col-sm-2 control-label">工单标题：</label>
+            <div class="col-sm-8">
+                {{ forms.title }}
+                {% if forms.title.errors %}<span  style="color:red">{{ forms.title.errors }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-group"><label class="col-sm-2 control-label">详细内容：</label>
+            <div class="col-sm-8">
+                {# <textarea class="form-control" name ="order_contents" rows="8" placeholder="工单详细内容"></textarea>#}
+                {{ forms.order_contents }}
+                {% if forms.order_contents.errors %}<span  style="color:red">{{ forms.order_contents.errors }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-group"><label class="col-sm-2 control-label">指派人：</label>
+            <div class="col-sm-8">
+                {{ forms.assign_to }}
+                {% if forms.assign_to.errors %}<span  style="color:red">{{ forms.assign_to.errors }}</span>{% endif %}
+            </div>
+        </div>
+
+         <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+                <button id="submit_button" class="btn btn-primary" type="submit">申请</button>
+                <button class="btn btn-white" type="reset">取消</button>
+            </div>
+         </div>
+        </form>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

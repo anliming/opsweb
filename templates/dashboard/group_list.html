@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% load mytags %}
+
+  {% block title %}首页{% endblock %}
+  {% block css %}
+  <style>
+    .form-horizontal .form-group{margin-bottom:10px;width:100%;}
+    .form-horizontal  .form-control{width:86%;}
+    .form-horizontal .control-label{width:75px;}
+  </style>
+
+  {% endblock %}
+
+  {% block breadcrunb %}
+      <h1>
+         Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">角色管理</li>
+      </ol>
+  {% endblock %}
+
+
+
+{% block content %}
+
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <div class="col-md-12">
+
+        {% include "groupaddmodel.html" %}
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="box box-info">
+
+
+            <div class="box-header with-border">
+              <h3 class="box-title">角色列表</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+
+            <div class="box-body">
+
+             <div style="margin-bottom: 10px;height: 30px" class="row">
+                <a style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加角色 </a>
+                <form style="float: right;width: 20%;margin-right: 1%">
+                <div  class="input-group">
+                    <input type="text" class="form-control" name="keyword"
+                         placeholder="角色名" value="{% if keyword %} {{ keyword }} {% endif %}">
+                    <div class="input-group-btn">
+                       <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                    </div>
+                </div>
+                </form>
+             </div>
+
+
+        <!--组列表部分-->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">组名</th>
+                    <th class="text-center">组员</th>
+                    <th class="text-center">权限</th>
+                    <th class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for group in grouplist %}
+                <tr class="gradeX">
+                    <td class="text-center">{{ group.name }}</td>
+                    <td class="text-center"> {{ group.user_set.all | userlist_str2| default:'无' }}
+                    <a class="btn btn-xs btn-info more" gid="{{group.id}}" gname="{{group.name}}">更多</a>
+                    </td>
+                    <td class="text-center"> {{ group.permissions.all | perm_str2 | default:'无'  }} </td>
+                    <td class="text-center">
+                       <div class="btn-group">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+                                编辑
+                                 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'dashboard:role_detail' group.id %}">角色管理</a></li>
+                            </ul>                                                                                                                                                        
+                        </div>
+                         <a href="#" class="btn btn-xs btn-danger delete" data-id = {{ group.id }} >删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div><!-- /.table-responsive -->
+
+            <div class="row">
+              <div class="col-sm-6">
+                 <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+                     显示 [{{ paginator.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+                 </div>
+              </div>
+              {% include 'paginator.html' %}
+            </div><!-- /.paginator -->
+
+            </div>
+            <!-- /.box-body -->
+
+        </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+{% endblock %}
+
+{% block js %}
+
+/*POST请求*/
+function post(group_value){
+    if (group_value == ""){
+        swal("添加失败", "用户组名不能为空", 'error');
+        return false;
+    }
+    $.post("", {"name": group_value},function(res){
+        if(res.code==0){
+            swal({
+                "title": "添加成功",
+                "text": "",
+                "type": "success"
+            },function(){
+                setTimeout(function(){
+                    window.location.reload();
+                },50);
+            })
+        }else{
+            swal("操作失败", res.errmsg, "error");
+        }
+    })
+
+}
+
+/*执行添加用户组*/
+$("#addbtn").click(function(){
+    $("#add_group_model").modal("show");
+    $("#create_group_btn").click(function(){
+        var group_value = $("#form_groupname").val();
+        $("#add_group_model").modal("hide");
+        post(group_value)
+    })
+});
+
+
+/*删除组*/
+$("tbody").on('click','.delete',function(){
+    if(confirm("是否确认删除组？")){
+        var that = this;
+        var id = $(this).attr('data-id')
+        $.ajax({
+            url:"",
+            type: "DELETE",
+            data: {"id":id},
+            datatype: "json",
+            success: function(res){
+                console.log(res)
+                if (res.code ==0){
+                    swal("Good!", res.result, "success")
+                    window.location.reload();
+                }else{
+                    swal("操作失败", res.errmsg, "error")
+                }
+            }
+        })         
+
+    }  // end confirm
+     return false   //get data and end
+})
+
+
+
+/*组与组成员关系模态窗*/
+$(".more").click(function(){
+  $("#group_users_model").modal("show");
+  var gid=$(this).attr('gid');
+  var gname=$(this).attr('gname');
+  // 展示组内成员
+  $.get("/dashboard/groupusers/", {"gid": gid},function(res){
+        var html = '<table class="table table-striped">';
+        $.each(res, function(n, obj){
+            html += '<tr>';
+            html += '<td>'+obj.username+'</td>';
+            html += '<td>'+obj.name_cn+'</td>';
+            html += '<td>'+obj.email+'</td>';
+            html += '<td><button class="btn btn-danger btn-xs del_group_user" uid="'+obj.id+'">删除</button></td>';
+            html += '</tr>'
+        });
+        html += '</table>';
+        $("#modal_show_group_users_list_title").html(gname);
+        $("#modal_show_group_users_content_list").html(html);
+
+  // 删除组内成员
+  $(".del_group_user").click(function(){
+        var that = $(this);
+        var uid = that.attr('uid');
+        $.ajax({
+            url:"/dashboard/groupusers/",
+            type: "DELETE",
+            data: {"groupid": gid, "userid": uid},
+            datatype: "json",
+            success: function(res){
+                if (res.code == 0){
+                    that.parents("tr").remove();
+                }else{
+                    swal("操作失败", res.errmsg, "error")
+                }
+            }
+        })  // end ajax
+     });    // end del
+  });   // end get
+})
+
+{% endblock %}
+

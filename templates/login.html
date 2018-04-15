@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>DevOps | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/static/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+
+</head>
+
+<body class="hold-transition login-page">
+
+<div class="login-box">
+  <div class="login-logo">
+    <a href="#"><b>DevOps</b></a>
+  </div>
+  <!-- /.login-logo -->
+
+  <div class="login-box-body">
+    <p class="login-box-msg">让技术产生价值</p>
+    <form onsubmit="return false;">
+      <div class="form-group has-feedback">
+        <input id="user" type="text" class="form-control" placeholder="用户名">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+
+      <div class="form-group has-feedback">
+        <input id="password" type="password" class="form-control" placeholder="密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-8">
+            <span id="errors" style="color:red"></span>
+        </div>
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+        </div>
+      </div>
+
+    </form>
+
+    <a href="#">忘记密码</a><br>
+
+
+  </div>
+
+</div>
+
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script>
+$('button').click(function(){
+    var username = $('#user').val()
+    var password = $('#password').val()
+    $.ajax({
+             type: "POST",
+             url: "/login/",
+             data: {username:username, password:password},
+             dataType: "json",
+             success: function(data){
+                 status = data.code
+                 if (status == 0){
+                    location.href = data['next_url']
+                 } else {
+                    console.log(data)
+                    $('#errors').html(data['errmsg'])
+                 }
+             },
+            error: function(){
+            },
+	})
+
+
+})
+
+</script>
+</body>
+</html>

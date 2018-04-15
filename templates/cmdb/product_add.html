@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}添加产品线{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">添加产品线</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">添加业务线</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+        <form class="form-horizontal" parsley-validate method="post">
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">业务线名称：</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control"  placeholder="请输入业务线名称" name="name" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">字母简称：</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="请输入字母简称" name="module_letter">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">上级业务线：</label>
+            <div class="col-sm-5">
+                <select class="chosen-select  form-control"  name="pid">
+                    <option value=""> ---顶级业务线---</option>
+                    {% for product in products %}
+                    <option value="{{ product.id }}"> {{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">运维负责人：</label>
+            <div class="col-sm-5">
+                <select class="chosen-select  form-control" multiple="multiple" data-placeholder="请选择运维负责人"  name="op_interface">
+                {% for user in user_object_list %}
+                    <option value="{{ user.id }}">{{ user.name_cn}}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">业务负责人：</label>
+            <div class="col-sm-5">
+                <select class="chosen-select  form-control" data-placeholder="请选择业务负责人"  multiple="multiple"  name="dev_interface">
+                {% for user in user_object_list %}
+                    <option value="{{ user.id }}">{{ user.name_cn}}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+$(function(){
+    //chosen select input
+    $(".chosen-select").select2();
+})
+
+{% endblock %}

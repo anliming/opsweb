@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+  {% block title %}密码修改{% endblock %}
+
+  {% block breadcrunb %}
+      <h1>
+         Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">修改密码</li>
+      </ol>
+  {% endblock %}
+
+
+
+{% block content %}
+
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+<div class="box box-info">
+
+         <div class="box-header with-border">
+          <h3 class="box-title">修改密码</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+
+
+       <div class="box-body">
+          {% if msg %}
+            <div class="alert alert-danger">{{ msg }}</div>
+          {% endif %}
+          <form class="form-horizontal" action="{% url 'dashboard:modify_pwd' %}" method="post">
+                <input type="hidden" name="uid" value="{{ uid }}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">新密码：</label>
+                    <div class="col-sm-6">
+                        <input type="password" name="password1" placeholder="新密码" class="form-control" required="">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">确认密码：</label>
+                    <div class="col-sm-6">
+                        <input type="password" name="password2" placeholder="确认密码" class="form-control" required="">
+                    </div>
+                </div>
+
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-white" type="reset">取消</button>
+                         <button type="submit" class="btn btn-primary block full-width m-b">确定</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

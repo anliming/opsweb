@@ -1,0 +1,11 @@
+ansible==1.9.6
+Django==1.11.8
+django-pure-pagination
+MySQL-python
+python-gitlab
+requests
+django-celery  
+celery-with-redis  
+aliyun-python-sdk-core
+aliyun-python-sdk-ecs
+qcloudapi-sdk-python

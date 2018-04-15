@@ -1,0 +1,54 @@
+<!--添加权限模态窗-->
+<div class="modal fade" tabindex="-1"  id="power_add_modal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+
+     <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title">添加权限</h4>
+     </div>
+
+     <div class="modal-body">
+     <p hidden id="errorMsg" class="text-danger" style="color:red"></p> <!-- foe error msg-->
+
+     <form class="form-horizontal" id="addForm">
+        <div class='form-group'>
+            <label class='col-sm-4 control-label'>权限名</label>
+            <div class='col-sm-8'>
+                <input id='codename' class="form-control" type='text' name='codename'>
+            </div>
+        </div>
+        <br>
+
+        <div class='form-group'>
+            <label class='col-sm-4 control-label'>描述</label>
+            <div class='col-sm-8'>
+                <input id='name'  class="form-control" type='text' name='name'>
+            </div>
+        </div>
+        <br>
+
+         <div class='form-group'>
+            <label class='col-sm-4 control-label'>model</label>
+            <div class='col-sm-8'>
+                <select name='content_type' id='content_type' class ="form-control" >
+                    {% for content_type  in all_content_type %}
+                        <option value = "{{ content_type.id}}">{{ content_type.model }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+
+         <div class="modal-footer">
+             <button type="submit" class="btn btn-primary" >确认</button>
+             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+         </div>
+
+    </form><!--form end-->
+   </div> <!--modal body end-->
+
+   </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

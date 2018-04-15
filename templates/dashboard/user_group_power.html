@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+  {% block title %}首页{% endblock %}
+
+
+  {% block breadcrunb %}
+      <h1>
+         Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">用户角色权限管理</li>
+      </ol>
+  {% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+ <div class="box-header with-border">
+  <h3 class="box-title">用户角色权限管理</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+
+<div class="box-body">
+    <form method="post" class="form-horizontal">
+        <input type="hidden" value='{{user.id}}' name="uid">  <!--update need id-->
+
+        <div class="form-group"><label class="col-sm-2 control-label">用户名：</label>
+            <div class="col-sm-8">
+                <input type="text" name="name" readonly="readonly" value="{{user.name_cn}}" class="form-control">
+            </div>
+        </div>
+
+        <!--更新用户角色-->
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">角色：</label>
+            <!--待选择区域-->
+            <div class="col-sm-4">
+                <select id="groups" name ="groups" class="form-control m-b" multiple size="6">
+                {% for group in user_not_groups %}
+                    <option value="{{ group.id }}" >{{ group.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <!--中间选择箭头-->
+            <div class="col-sm-1">
+                <div class=" btn-group" style="margin-top: 70px;">
+                     <button type="button" class="btn btn-white" onclick="move('groups', 'groups_selected')"><i class="fa fa-chevron-right"></i></button>
+                    <button type="button" class="btn btn-white" onclick="move('groups_selected', 'groups')"><i class="fa fa-chevron-left"></i> </button>
+                </div>
+            </div>
+
+            <!--x选中区域-->
+            <div class="col-sm-3">
+                 <div>
+                     <select id="groups_selected" name="groups_selected" class="form-control m-b" size="6"  multiple>
+                         {% for group in user_has_groups %}
+                        <option value="{{ group.id }}" selected >{{ group.name }}</option>
+                        {% endfor %}
+                     </select>
+                </div>
+            </div>
+         </div> <!--end form-group-->
+
+        <!--更新用户权限-->
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">权限：</label>
+            <!--待选择区域-->
+            <div class="col-sm-4">
+                <select id="perms" name="perms" class="form-control m-b" multiple size="12">
+                {% for perm in user_not_permissions %}
+                    <option value="{{ perm.id }}" >{{ perm.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <!--中间选择箭头-->
+            <div class="col-sm-1">
+                <div class="btn-group" style="margin-top: 70px;">
+                     <button type="button" class="btn btn-white" onclick="move('perms', 'perms_selected')"><i class="fa fa-chevron-right"></i></button>
+                    <button type="button" class="btn btn-white" onclick="move('perms_selected', 'perms')"><i class="fa fa-chevron-left"></i> </button>
+                </div>
+            </div>
+
+            <!--x选中区域-->
+            <div class="col-sm-3">
+                     <div>
+                         <select id="perms_selected" name="perms_selected" class="form-control m-b" size="12"  multiple>
+                             {% for perm in user_has_permissions %}
+                            <option value="{{ perm.id }}" selected >{{ perm.name }}</option>
+                            {% endfor %}
+                         </select>
+                    </div>
+            </div>
+        </div> <!--end form-group-->
+
+
+       <div class="hr-line-dashed"></div>
+       <div class="form-group">
+             <div class="col-sm-4 col-sm-offset-2">
+                 <button class="btn btn-white" type="reset">取消</button>
+                 <button id="submit_button" class="btn btn-primary" type="submit">确认</button>
+            </div>
+       </div>
+</form>
+
+
+</div>
+    <!-- /.box-body -->
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+{% endblock %}
+
+{% block js %}
+
+function move(from, to, from_o, to_o) {
+    $("#" + from + " option").each(function () {
+        if ($(this).prop("selected") == true) {
+            $("#" + to).append(this);
+            if( typeof from_o !== 'undefined'){
+                $("#"+to_o).append($("#"+from_o +" option[value='"+this.value+"']"));
+            }
+        }
+    });
+}
+
+{% endblock %}

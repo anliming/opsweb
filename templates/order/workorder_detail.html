@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}工单详情{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">工单详情</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">工单申请</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+    <form method="post" action="" class="form-horizontal">
+        {% if msg %}
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ msg | safe }}
+            </div>
+        {% elif errmsg %}
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ errmsg | safe }}
+            </div>
+        {% endif %}
+
+        <input type="hidden" name="id" value="{{ work_order.id }}">
+        <input type="hidden" name="status" value="{{ work_order.status }}">
+        <pre>{{ work_order.order_contents }}</pre>
+        <div class="hr-line-dashed"></div>
+
+        {% if work_order.status == 1 %}
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea  name="result_desc" class="form-control" rows="5" placeholder="处理结果"></textarea>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        {% endif %}
+
+        <div class="form-group">
+            <div class="col-sm-4">
+                {% if work_order.status == 0 %}
+                    <button id="submit_button" class="btn btn-primary" type="submit">接受</button>
+                {% elif work_order.status == 1 %}
+                    <button id="submit_button" class="btn btn-primary" type="submit">完成</button>
+                {% endif %}
+                <button class="btn btn-white" type="reset">取消</button>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}
