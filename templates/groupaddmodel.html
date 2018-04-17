@@ -1,0 +1,51 @@
+<!--查看组成员模态窗-->
+<div class="modal fade" id="group_users_model" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>用户组名: <span id="modal_show_group_users_list_title"></span></h4>
+            </div>
+
+            <div class="modal-body form-inline" id="modal_show_group_users_content_list">
+            </div>
+
+            <div class="modal-footer">
+                <input class="btn btn-default" data-dismiss="modal" aria-hidden="true" type="button" value="确定">
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal-->
+
+<!--添加组模态窗-->
+<div class="modal fade" id="add_group_model" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">添加角色</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label class="control-label">角色：</label>
+                    <input type="text" class="form-control" id="form_groupname" placeholder="请输入角色名称" />
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="create_group_btn">确定</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!--end modal-->

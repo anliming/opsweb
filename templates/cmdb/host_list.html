@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">主机列表</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">任务列表</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+
+    <div class="box-body">
+
+     <div style="margin: 10px;height: 30px" class="row">
+
+        <button class="ladda-button btn btn-sm btn-primary import-data" data-style="slide-right">导入主机</button>
+        {% if messages %}
+        <div class="alert alert-success alert-dismissable">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            {% for message in messages %}
+                {{ message }} <br/>
+            {% endfor %}
+        </div>
+       {% endif %}
+
+
+        <form style="float: right;width: 20%;margin-right: 1%">
+        <div  class="input-group">
+            <input type="text" class="form-control" name="keyword"
+                 placeholder="实例名|实例描述|内网IP" value="{% if keyword %} {{ keyword }} {% endif %}">
+            <div class="input-group-btn">
+               <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+            </div>
+        </div>
+        </form>
+     </div>
+
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-striped footable toggle-arrow-tiny" data-page-navigation=".paginations">
+         <thead>
+            <tr>
+                <th class="text-center" data-toggle="true">云类型</th>
+                <th class="text-center">实例名称</th>
+                <th class="text-center">操作系统</th>
+                <th class="text-center">CPU核数</th>
+                <th class="text-center">内存大小(GB)</th>
+                <th class="text-center">私网</th>
+                <th class="text-center">创建时间</th>
+                <th class="text-center">过期时间</th>
+                <th class="text-center" data-hide="all">产品线</th>
+                <th class="text-center">操作</th>
+            </tr>
+         </thead>
+
+        <tbody>
+        {% for host in host_list %}
+            <tr class="gradeX {{ host.id }}">
+                <td class="text-center">{{ host.get_cloud_type_display }}</td>
+                <td class="text-center">{{ host.instance_name }}</td>
+                <td class="text-center">{{ host.os_name }}</td>
+                <td class="text-center"> {{ host.cpu }} </td>
+                <td class="text-center"> {{ host.memory }} </td>
+                <td class="text-center"> {{ host.private_ip }} </td>
+                <td class="text-center"> {{ host.creation_time }} </td>
+                <td class="text-center"> {{ host.expired_time }} </td>
+                <td class="text-center">{% for line in host.business_line.all %}{{ line.name }}<br/>{% endfor %}</td>
+                <td class="text-center">
+                    <a href="{% url 'cmdb:host_edit' host.id %}" class="btn btn-xs btn-info">编辑</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr class="gradeX">
+                <td colspan="10" class="text-center">没有主机……</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div><!-- /.table-responsive -->
+
+    <div class="row">
+      <div class="col-sm-6">
+         <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+             显示 [{{ paginator.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+         </div>
+      </div>
+
+      {% include 'paginator.html' %}
+    </div><!-- /.paginator -->
+
+</div>
+<!-- /.box-body -->
+
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+{% endblock %}
+
+{% block js %}
+
+        var l = $( '.ladda-button' ).ladda();
+
+        l.click(function(){
+            // Start loading
+            l.ladda('start');
+              $.ajax({
+                    type: "GET",
+                    url: "{% url 'cmdb:import_data' %}",
+                    data:{},
+                    success: function(data){
+                        console.log(data);
+                        swal({
+                            title: "主机信息导入",
+                            text: "主机信息导入更新完成！",
+                            type: "success",
+                            confirmButtonText: "确定"
+                        });
+                    }
+                }).always(function(){l.ladda('stop')})
+        });
+
+        $(document).ready(function() {
+            $('.footable').footable();
+        });
+
+{% endblock %}

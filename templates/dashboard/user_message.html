@@ -1,0 +1,39 @@
+{% extends "public/layout.html" %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'index' %}">仪表盘</a>
+        </li>
+        <li class="active">
+            <strong>我的消息</strong>
+        </li>
+    </ol>
+{% endblock %}
+{% block body %}
+        <div class="wrapper wrapper-content animated fadeInRight">
+               <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>我的消息</h5>
+                    <div class="ibox-content">
+
+                        <table class="table">
+                            <tbody>
+                             {% for message in page_obj.object_list %}
+                            <tr>
+                                <td>{{ message.message}}<small style="float: right">{{ message.add_time }}</small></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block js %}
+{% endblock %}

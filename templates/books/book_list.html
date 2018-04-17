@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}图书管理{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">图书列表</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+{% include "bookaddmodel.html" %}
+
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">图书列表</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+
+    <div class="box-body">
+
+     <div style="margin-bottom: 10px;height: 30px" class="row">
+       <a style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加图书 </a>
+       <a style="float: left; margin-left: 1%" class="btn btn-sm btn-success" href="{% url 'books:book_add' %}"> 添加图书2 </a>
+        <form style="float: right;width: 20%;margin-right: 1%">
+        <div  class="input-group">
+            <input type="text" class="form-control" name="keyword"
+                 placeholder="书名|作者|出版商" value="{% if keyword %} {{ keyword }} {% endif %}">
+            <div class="input-group-btn">
+               <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+            </div>
+        </div>
+        </form>
+     </div>
+
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-striped footable toggle-arrow-tiny" data-page-navigation=".paginations">
+        <thead>
+	  <tr>
+	      <th>图书</th>
+	      <th>作者</th>
+	      <th>出版商</th>
+	      <th>出版时间</th>
+	      <th>操作</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	    {% for book in book_list %}
+		<tr>
+		    <td> <a href="{% url 'books:book_detail'  book.id %}">{{ book.name }}</a> </td>
+		    <td>
+			{% for author in book.authors.all %}
+			 {{ author.name }},
+			{% endfor %}
+		    </td>
+		    <td> {{ book.publisher.name }}</td>
+		    <td> {{ book.publication_date }}</td>
+		    <td>
+			<a type="button" class="btn btn-info btn-xs"  href="{% url 'books:book_detail'  book.id %}" >修改</a>
+		    </td>
+		</tr>
+	    {% endfor %}
+	  </tbody>
+    </table>
+
+    </div><!-- /.table-responsive -->
+
+    <div class="row">
+      <div class="col-sm-6">
+	 <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+	     显示 [{{ paginator.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+	 </div>
+      </div>
+
+      {% include 'paginator.html' %}
+    </div><!-- /.paginator -->
+
+</div>
+<!-- /.box-body -->
+
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+{% endblock %}
+
+{% block js %}
+
+$(".select2").select2({
+  width: '100%'
+});
+
+$('.datepicker').datepicker({
+    language: 'zh-CN',
+    autoclose: true,
+    format: 'yyyy-mm-dd',
+    endDate: '0d'
+});
+
+
+/*添加模态窗弹出*/
+$("#addbtn").click(function(){
+    $("#book_add_modal").modal("show");
+});
+
+/*添加图书*/
+$("#submit_button").click(function(){
+    var formdata = $('#AddForm').serialize()
+    console.log(formdata)
+    $.post('', formdata, function(res){
+        console.log(res)
+        if (res.code == 0) {
+            swal({
+                "title": "添加成功",
+                 "text": res.result,
+                 "type": "success"
+            }, function () {
+                 setTimeout(function () {
+                    window.location.reload();
+                 }, 50);
+             })
+        } else {
+            swal("操作失败", res.errmsg, "error");
+         }
+    })
+    return false;
+})
+
+
+{% endblock %}

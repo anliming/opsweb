@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+  {% block title %}用户更新{% endblock %}
+  {% block breadcrunb %}
+      <h1>
+         Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">用户更新</li>
+      </ol>
+  {% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+      <!-- Left col -->
+        <div class="col-md-12">
+
+        <div class="box box-info">
+
+
+            <div class="box-header with-border">
+              <h3 class="box-title">用户更新</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+
+            <div class="box-body">
+
+                <div style="margin-bottom: 10px;height: 30px" class="row">
+                    <a style="float: right; margin-right: 1%" class="btn btn-sm btn-primary"
+                       href="{% url 'dashboard:modify_pwd' %}?uid={{ user.id }}"> 修改密码 </a>
+                </div>
+
+
+                <form method="post"  class="form-horizontal">
+                    <input type="hidden" name="id" value="{{user.id}}">
+                    <div class="form-group"><label class="col-sm-2 control-label">用户名：</label>
+                        <div class="col-sm-8"><input type="text" readonly="readonly" name="username" value="{{user.username}}" class="form-control" required=""></div>
+                    </div>
+                           
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">中文名：</label>
+                       <div class="col-sm-8"><input type="text" name="name_cn" value="{{user.name_cn}}" class="form-control" required=""></div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">手机：</label>
+                       <div class="col-sm-8"><input type="text" name="phone" value="{{user.phone}}" class="form-control" required=""></div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">邮箱：</label>
+                       <div class="col-sm-8"><input type="text" name="email" value="{{user.email}}" class="form-control" required=""></div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-white" type="reset" href="{% url 'dashboard:user_list' %}">取消</button>
+                            <button id="submit_button" class="btn btn-primary" type="submit">确认</button>
+                        </div>
+                    </div>
+                    </form>
+    </div>
+    <!-- /.body -->
+   </div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+  {% block title %}权限列表{% endblock %}
+
+  {% block css %}
+  <style>
+    .form-horizontal .form-group{margin-bottom:10px;width:100%;}
+    .form-horizontal  .form-control{width:86%;}
+    .form-horizontal .control-label{width:80px;}
+  </style>
+
+  {% endblock %}
+
+  {% block breadcrunb %}
+      <h1>
+         Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">权限列表</li>
+      </ol>
+  {% endblock %}
+
+
+
+{% block content %}
+
+ <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <div class="col-md-12">
+
+        {% include "poweraddmodel.html" %}
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">权限列表</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+
+            <div class="box-body">
+
+             <div style="margin-bottom: 10px;height: 30px" class="row">
+                <button style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id="Addbtn">添加权限</button>
+                <form style="float: right;width: 20%;margin-right: 1%">
+                <div  class="input-group">
+                    <input type="text" class="form-control" name="keyword"
+                         placeholder="权限名" value="{% if keyword %} {{ keyword }} {% endif %}">
+                    <div class="input-group-btn">
+                       <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                    </div>
+                </div>
+                </form>
+             </div>
+
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+
+                </thead>
+                    <tr>
+                        <th class="text-center">权限名</th>
+                        <th class="text-center">权限描述</th>
+                        <th class="text-center">关联Model</th>
+                        <th class="text-center">操作</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for power in powerlist %}
+                    <tr>
+                        <td class="text-center">{{ power.codename }}</td>
+                        <td class="text-center"> {{ power.name }} </td>
+                        <td class="text-center"> {{ power.content_type }} </td>
+                        <td class="text-center">
+                            <a href="{% url 'dashboard:power_detail' power.id %}" class="btn btn-xs btn-info update">编辑</a>
+                            <a href="#" class="btn btn-xs btn-danger delete" data-id = {{ power.id }} >删除</a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+
+            <div class="row">
+              <div class="col-sm-6">
+                 <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+                     显示 [{{ paginator.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+                 </div>
+              </div>
+              {% include 'paginator.html' %}
+            </div><!-- /.paginator -->
+
+    </div>
+    <!-- /.box-body -->
+
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+{% endblock %}
+
+
+{% block js %}
+
+/*click show modal*/
+$('#Addbtn').on('click',function(){
+    $('#power_add_modal').modal('show')
+})
+
+/* add data for ajax */
+$('#addForm').on('submit',function(){
+       var str = $('#addForm').serialize()
+       console.log(str)
+       $.post("",str,function(data){
+         console.log(data)
+         if (data['code']==0){
+            $('#addModal').modal('hide')
+            swal({
+                title:"success",
+                text:data['result'],
+                type:"success",
+                confirmButtonText:'Good'
+                },function(){
+                    location.reload()
+                 })
+         }else{
+          $('#errorMsg').html('Failed:'+data['errmsg']).show()
+         }
+       })
+       return false
+})  //submit form
+
+
+/*delete*/
+$("tbody").on('click','.delete',function(){
+    if(confirm("是否确认删除？")){
+        var that = this;
+        var id = $(this).attr('data-id')
+        $.ajax({
+            url:"",
+            type: "DELETE",
+            data: {"id":id},
+            datatype: "json",
+            success: function(res){
+                console.log(res)
+                if (res.code ==0){
+                    swal("Good!", res.result, "success")
+                    window.location.reload();
+                }else{
+                    swal("操作失败", res.errmsg, "error")
+                }
+            }
+        })
+
+    }  // end confirm
+     return false   //get data and end
+})
+
+
+
+{% endblock %}
+

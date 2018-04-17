@@ -1,0 +1,6 @@
+ansible==1.9.6
+Django==1.11.8
+django-pure-pagination
+MySQL-python
+python-gitlab
+requests

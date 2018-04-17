@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">任务列表</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">任务列表</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+
+    <div class="box-body">
+
+     <div style="margin-bottom: 10px;height: 30px" class="row">
+        <form style="float: right;width: 20%;margin-right: 1%">
+        <div  class="input-group">
+            <input type="text" class="form-control" name="keyword"
+                 placeholder="标题|内容|结果" value="{% if keyword %} {{ keyword }} {% endif %}">
+            <div class="input-group-btn">
+               <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+            </div>
+        </div>
+        </form>
+     </div>
+
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-striped footable toggle-arrow-tiny" data-page-navigation=".paginations">
+        <thead>
+            <tr>
+                <th class="text-center">任务名称</th>
+                <th class="text-center">Playbook</th>
+                <th class="text-center">执行状态</th>
+                <th class="text-center">执行结果</th>
+                <th class="text-center">添加时间</th>
+                <th class="text-center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasklist %}
+            <tr class="gradeX">
+                <td class="text-center">{{ task.name }}</td>
+                <td class="text-center"> {{ task.playbook }} </td>
+                <td id="status_{{ task.id }}" class="text-center"><span class="label {% ifequal task.status 'Y' %}label-success{% else %}label-danger{% endifequal %}">{{ task.get_status_display }}</span> </td>
+                <td id="exec_result_{{ task.id }}" class="text-center"> {% for result in task.execresult_set.all %}{{ result.host }}&nbsp;&nbsp;&nbsp;&nbsp;不可达:{{ result.unreachable }}&nbsp;&nbsp;跳过:{{ result.skipped }}&nbsp;&nbsp;成功：{{ result.ok }}&nbsp;&nbsp;改变:{{ result.changed }}&nbsp;&nbsp;失败:{{ result.failures }}<br /> {% endfor %} </td>
+                <td class="text-center"> {{ task.exec_time}} </td>
+                <td class="text-center">
+                        <button type="button"  data-id="{{ task.id }}" id="{{ task.id }}" class="btn btn-xs btn-info btn-execute" {% if task.status == 'Y' %}disabled{% endif %}>执行</button>
+                        <a href="{% url 'task:detail' task.id %}" class="btn btn-xs btn-success">详情</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div><!-- /.table-responsive -->
+
+    <div class="row">
+      <div class="col-sm-6">
+         <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+             显示 [{{ paginator.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+         </div>
+      </div>
+
+      {% include 'paginator.html' %}
+    </div><!-- /.paginator -->
+
+</div>
+<!-- /.box-body -->
+
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+{% endblock %}
+
+{% block js %}
+
+$('.btn-execute').click(function () {
+    var task_id = $(this).attr('data-id');
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'task:list' %}",
+        data: {'task_id': task_id},
+        success: function (data) {
+            console.log(data, typeof(data));
+            if(data['task_status'] == 'Y'){
+                console.log('Y，执行过了');
+                $('#'+String(task_id)).attr("disabled", "disabled");
+                var result_val = '';
+                $.each(data['task_exec_result'], function (k,v) {
+                    console.log(k, v);
+                    result_val += k + '  不可达: '+ v['unreachable'] + '  跳过:' + v['skipped'] + '  成功:' + v['ok'] + '  改变:' + v['changed'] + '  失败:'+ v['failures'] +'\n';
+                    console.log(result_val);
+                });
+                 document.getElementById('exec_result_'+ String(task_id)).innerText = result_val;
+                 document.getElementById('status_'+ String(task_id)).innerText = '已执行';
+                 document.getElementById('status_'+ String(task_id)).setAttribute('class', 'label label-success');
+            }
+
+        }
+    })
+})
+
+{% endblock %}
