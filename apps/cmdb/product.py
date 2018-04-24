@@ -5,7 +5,11 @@ from django.core.urlresolvers import reverse
 from cmdb.models import Product
 from dashboard.models import UserProfile
 from django.contrib.auth.mixins import LoginRequiredMixin
+<<<<<<< HEAD
 from .forms import  ProductForm
+=======
+
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 
 from cmdb.forms import ProductForm
 from django.conf import settings
@@ -78,7 +82,10 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "cmdb/product_manage.html"
     context_object_name = "product"
+<<<<<<< HEAD
     next_url = '/cmdb/product_detail'
+=======
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 
     '''
         展示业务线信息
@@ -108,6 +115,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         return host_list
 
 
+<<<<<<< HEAD
     def post(self,request,*args,**kwargs):
 
         pk = kwargs.get('pk')
@@ -121,3 +129,9 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         return render(request, settings.JUMP_PAGE, res)
 
 
+=======
+    def post(self,request):
+        res = {"code": 0, 'next_url': reverse("cmdb:product_detail",args=[1])}
+
+        #form =
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5

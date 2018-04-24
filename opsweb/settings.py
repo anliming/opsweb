@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 #encoding=utf-8
+=======
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 """
 Django settings for opsweb project.
 
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard',
+<<<<<<< HEAD
     'books',
     'django_otp',
     'django_otp.plugins.otp_totp',
@@ -50,6 +54,12 @@ INSTALLED_APPS = [
     'djcelery',
     'cmdb',
     'tasks',
+=======
+    'work_order',
+    'books',
+    'djcelery',
+    'cmdb',
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 ]
 
 AUTH_USER_MODEL = 'dashboard.UserProfile'
@@ -58,7 +68,10 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+<<<<<<< HEAD
     'django_otp.middleware.OTPMiddleware',
+=======
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -95,7 +108,11 @@ DATABASES = {
       'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'opsweb',
+<<<<<<< HEAD
         'HOST': '172.16.13.225',
+=======
+        'HOST': '127.0.0.1',
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
         'USER': 'root',
         'PASSWORD': '123456',
         'PORT': 3306,
@@ -154,6 +171,7 @@ LOGIN_URL = "/login/"
 
 JUMP_PAGE = "jump.html"
 
+<<<<<<< HEAD
 EMAIL_HOST = "smtp.yktour.com.cn"
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "anliming@yktour.com.cn"
@@ -161,6 +179,14 @@ EMAIL_HOST_PASSWORD = "alm@1234"
 #EMAIL_USE_TLS = True
 EMAIL_USE_SSL = True
 EMAIL_FROM = "anliming@yktour.com.cn"
+=======
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "admin@anliming.com"
+EMAIL_HOST_PASSWORD = "anliming123"
+EMAIL_USE_SSL = True
+EMAIL_FROM = "admin@anliming.com"
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 
 
 LOGGING = {
@@ -216,11 +242,19 @@ LOGGING = {
             "class": "logging.handlers.SMTPHandler",
             "level": "ERROR",
             "formatter": "simple",
+<<<<<<< HEAD
             "mailhost":("smtp.139.com", 25),
             "fromaddr":"1387@139.com",
             "toaddrs":["78731@qq.com"],
             "subject" : "devops mail",
             "credentials" :("1326087@139.com","yi1507036")
+=======
+            "mailhost":("smtp..com", 25),
+            "fromaddr":".com",
+            "toaddrs":[".com"],
+            "subject" : "devops mail",
+            "credentials" :("132.com","xxx")
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
         }
     },
 
@@ -232,6 +266,7 @@ LOGGING = {
             'format': '%(asctime)s %(levelname)s %(message)s'
         }
     },
+<<<<<<< HEAD
 }
 
 
@@ -244,3 +279,18 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'     # Backend数�
 
 CELERYD_LOG_FILE = BASE_DIR + "/logs/celery/celery.log"         # log路径
 CELERYBEAT_LOG_FILE = BASE_DIR + "/logs/celery/beat.log"     # beat log路径
+=======
+
+}
+
+
+import djcelery
+djcelery.setup_loader()        
+
+BROKER_URL = 'redis://127.0.0.1:6379/0'    
+BROKER_TRANSPORT = 'redis'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'     
+
+CELERYD_LOG_FILE = BASE_DIR + "/logs/celery/celery.log"         
+CELERYBEAT_LOG_FILE = BASE_DIR + "/logs/celery/beat.log"     
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5

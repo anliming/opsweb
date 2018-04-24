@@ -43,8 +43,14 @@
     <div class="box-body">
 
      <div style="margin-bottom: 10px;height: 30px" class="row">
+<<<<<<< HEAD
        <a style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加图书 </a>
        <a style="float: left; margin-left: 1%" class="btn btn-sm btn-success" href="{% url 'books:book_add' %}"> 添加图书2 </a>
+=======
+        {% if perms.books.book_admin %}
+            <a style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加图书 </a>
+        {% endif %}
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
         <form style="float: right;width: 20%;margin-right: 1%">
         <div  class="input-group">
             <input type="text" class="form-control" name="keyword"
@@ -65,13 +71,27 @@
 	      <th>作者</th>
 	      <th>出版商</th>
 	      <th>出版时间</th>
+<<<<<<< HEAD
 	      <th>操作</th>
+=======
+          {% if perms.books.book_admin %}
+	      <th>操作</th>
+          {% endif %}
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 	  </tr>
 	  </thead>
 	  <tbody>
 	    {% for book in book_list %}
 		<tr>
+<<<<<<< HEAD
 		    <td> <a href="{% url 'books:book_detail'  book.id %}">{{ book.name }}</a> </td>
+=======
+            {% if perms.books.book_admin %}
+		    <td> <a href="{% url 'books:book_detail'  book.id %}">{{ book.name }}</a> </td>
+            {% else %}
+                 <td> {{ book.name }} </td>
+            {% endif %}
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 		    <td>
 			{% for author in book.authors.all %}
 			 {{ author.name }},
@@ -79,9 +99,17 @@
 		    </td>
 		    <td> {{ book.publisher.name }}</td>
 		    <td> {{ book.publication_date }}</td>
+<<<<<<< HEAD
 		    <td>
 			<a type="button" class="btn btn-info btn-xs"  href="{% url 'books:book_detail'  book.id %}" >修改</a>
 		    </td>
+=======
+             {% if perms.books.book_admin %}
+		    <td>
+			<a type="button" class="btn btn-info btn-xs"  href="{% url 'books:book_detail'  book.id %}" >修改</a>
+		    </td>
+           {% endif %}
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 		</tr>
 	    {% endfor %}
 	  </tbody>
@@ -131,7 +159,11 @@ $("#addbtn").click(function(){
     $("#book_add_modal").modal("show");
 });
 
+<<<<<<< HEAD
 /*添加图书*/
+=======
+/*添加出版商*/
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 $("#submit_button").click(function(){
     var formdata = $('#AddForm').serialize()
     console.log(formdata)

@@ -74,7 +74,11 @@
                  <div>
                      <select id="groups_selected" name="groups_selected" class="form-control m-b" size="6"  multiple>
                          {% for group in user_has_groups %}
+<<<<<<< HEAD
                         <option value="{{ group.id }}" >{{ group.name }}</option>
+=======
+                        <option value="{{ group.id }}" selected >{{ group.name }}</option>
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                         {% endfor %}
                      </select>
                 </div>
@@ -107,7 +111,11 @@
                      <div>
                          <select id="perms_selected" name="perms_selected" class="form-control m-b" size="12"  multiple>
                              {% for perm in user_has_permissions %}
+<<<<<<< HEAD
                             <option value="{{ perm.id }}" >{{ perm.name }}</option>
+=======
+                            <option value="{{ perm.id }}" selected >{{ perm.name }}</option>
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                             {% endfor %}
                          </select>
                     </div>
@@ -118,7 +126,11 @@
        <div class="hr-line-dashed"></div>
        <div class="form-group">
              <div class="col-sm-4 col-sm-offset-2">
+<<<<<<< HEAD
                  <button class="btn btn-white" type="reset" href="{% url 'dashboard:user_list' %}">取消</button>
+=======
+                 <button class="btn btn-white" type="reset">取消</button>
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                  <button id="submit_button" class="btn btn-primary" type="submit">确认</button>
             </div>
        </div>
@@ -148,6 +160,7 @@ function move(from, to, from_o, to_o) {
     });
 }
 
+<<<<<<< HEAD
 $('#submit_button').on('click',function(){
 
     $("#perms_selected").each(function(){
@@ -157,4 +170,6 @@ $('#submit_button').on('click',function(){
 })
 
 
+=======
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 {% endblock %}

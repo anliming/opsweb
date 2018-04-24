@@ -3,7 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+<<<<<<< HEAD
 class Publish(models.Model):
+=======
+
+class Publish(models.Model):           
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     '''
     出版商
     '''
@@ -14,11 +19,20 @@ class Publish(models.Model):
     class Meta:
         verbose_name = '出版商信息'
         verbose_name_plural = verbose_name
+<<<<<<< HEAD
 
     def __unicode__(self):
         return self.name
 
 class Author(models.Model):
+=======
+    
+    def __unicode__(self):
+        return self.name
+
+
+class Author(models.Model):                     
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     '''
     作者
     '''
@@ -30,25 +44,49 @@ class Author(models.Model):
     class Meta:
         verbose_name = '作者信息'
         verbose_name_plural = verbose_name
+<<<<<<< HEAD
 
     def __unicode__(self):
         return self.name
 
 class Book(models.Model):
+=======
+    
+    def __unicode__(self):
+        return self.name
+
+
+class Book(models.Model):                        
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     '''
     图书
     '''
     name = models.CharField("书名", max_length=100)
     # 作者和书是多对多的关系
+<<<<<<< HEAD
     authors = models.ManyToManyField(Author, verbose_name="作者")
     # 一本书只能被一家出版，出版商可以出版多本书
     publisher = models.ForeignKey(Publish, verbose_name="出版社")
+=======
+    authors = models.ManyToManyField(Author, verbose_name="作者")     
+    # 一本书只能被一家出版，出版商可以出版多本书
+    publisher = models.ForeignKey(Publish, verbose_name="出版社")     
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     publication_date = models.DateField("出版时间")
 
     class Meta:
         verbose_name = '图书信息'
         verbose_name_plural = verbose_name
+<<<<<<< HEAD
         ordering = ['-publication_date']
 
     def __unicode__(self):
         return self.name
+=======
+        ordering = ['-publication_date']  
+    
+    def __unicode__(self):
+        return self.name
+
+
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5

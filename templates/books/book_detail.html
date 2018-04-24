@@ -41,6 +41,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group"><label class="col-sm-2 control-label">作者：</label>
                        <div class="col-sm-8">
+<<<<<<< HEAD
                                 <select data-placeholder="" multiple="multiple" tabindex="3" name="authors"  class="select2 form-control ">
                                 {% for author in authors %}
                                    {% for a in book.authors.all %}
@@ -51,6 +52,20 @@
                                  <option value="{{ author.id }}">{{ author.name }}</option>
                               {% endfor %}    
                               </select>
+=======
+                           <select data-placeholder="" multiple="multiple" tabindex="3" name="authors" id="authors"  class="select2 form-control ">
+                                {% for author in authors %}
+                                   {% for a in book.authors.all %}
+				                    {% if author == a  %}
+                                        <option value="{{ author.id }}" selected="selected">{{ author.name}}</option>
+                                    {% else %}
+                                        <option value="{{ author.id }}">{{ author.name }}</option>
+                                    {% endif %}
+
+                                  {% endfor %}
+                              {% endfor %}    
+                           </select>
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                        </div>
                     </div>
 
@@ -72,7 +87,11 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group"><label class="col-sm-2 control-label">出版时间：</label>
                        <div class="col-sm-8">
+<<<<<<< HEAD
 			   <input type="text" name="publication_date" value="{{book.publication_date|date:'Y-m-d'}}" class="form-control datepicker" required="">
+=======
+			   <input type="text" name="publication_date" value="{{book.publication_date|date:'Y-m-d:h-m-s'}}" class="form-control datepicker" required="">
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                        </div>
                     </div>
 
@@ -116,6 +135,10 @@ $("#delete_button").on('click',function(){
             url:"",
             type: "DELETE",
             success: function(res){
+<<<<<<< HEAD
+=======
+            console.log(res) 
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
             if (res.code == 0) {
 		    swal({
 			 "title": "删除",

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #encoding=utf-8
 from opsweb.mycelery import app
 from  django.core.mail import send_mail
@@ -52,3 +53,21 @@ def DailyWorkOrder():
             orderstate.type4 = order_type4
         orderstate.save()
          #return {"user_id":user_id,"type0":order_type0,"type1":order_type1,"type2":order_type2,"type3":order_type3,"type4":order_type4}
+=======
+
+from opsweb.mycelery import app 
+from django.core.mail import send_mail
+import traceback,os
+
+@app.task(name="sendmail")
+def sendmail(title,order_contents,email_from,email_to):
+    try:
+    	send_mail(title,order_contents,email_from,email_to)
+    except:
+        print('fail')
+        traceback.print_exc()
+
+@app.task(name="touchfile")
+def touchfile():
+    os.mkdir("/tmp/aa")
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5

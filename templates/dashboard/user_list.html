@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+<<<<<<< HEAD
 {% load mytags %} }}
+=======
+
+{% load mytags %}
+
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
   {% block title %}首页{% endblock %}
   {% block css %}
   <style>
@@ -79,12 +85,21 @@
                    <tr class="gradeX">
                       <td class="text-center"><a href="{% url 'dashboard:user_detail' user.id %}">{{ user.username }}</a> </td>
                       <td class="text-center"> {{ user.name_cn }} </td>
+<<<<<<< HEAD
                       <td class="text-center"> {{ user.groups.all | group_str2 |default:"无"}} </td>
                       <td class="text-center">{{ user.phone | default_if_none:'' }}</td>
                       <td class="text-center">{{ user.is_active }}</td>
                 
                       <td class="text-center">
                         <div class="btn-group" >
+=======
+                      <td class="text-center"> {{ user.groups.all | group_str2 |default:"Nothing"}} </td>
+                      <td class="text-center">{{ user.phone | default_if_none:'' }}</td>
+                      <td class="text-center">{{ user.is_active | bool2str }}</td>
+                
+                      <td class="text-center">
+                        <div class="btn-group">
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                          <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">修改<span class="caret"></span></button>
                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                             <li role="presentation"><a role="menuitem" tabindex="-1"
@@ -170,6 +185,7 @@ $("tbody").on('click','.del',function(){
             success: function(res){
                 console.log(res)
                 if (res.code ==0){
+<<<<<<< HEAD
                     swal({
                 "title": "删除成功",
                  "text": res.result,
@@ -179,6 +195,9 @@ $("tbody").on('click','.del',function(){
                     window.location.reload();
                  }, 50);
              })
+=======
+                    window.location.reload();
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                 }else{
                     swal("操作失败", res.errmsg, "error")
                 }

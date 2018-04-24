@@ -15,4 +15,8 @@ urlpatterns = [
     url(r'^powerlist/$', power.PowerListView.as_view(), name='power_list'),
     url(r'^powerdetail/(?P<pk>[0-9]+)?/$', power.PowerDetailView.as_view(), name='power_detail'),
 
+<<<<<<< HEAD
 ]
+=======
+]
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
