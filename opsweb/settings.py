@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'work_order',
     'djcelery',
     'cmdb',
+    'tasks',
 ]
 
 AUTH_USER_MODEL = 'dashboard.UserProfile'

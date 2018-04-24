@@ -59,7 +59,7 @@
                 <th class="text-center">任务名称</th>
                 <th class="text-center">Playbook</th>
                 <th class="text-center">执行状态</th>
-                <th class="text-center">执行结果</th>
+                <th data-hide="all" class="text-center">执行结果</th>
                 <th class="text-center">添加时间</th>
                 <th class="text-center">操作</th>
             </tr>
@@ -70,10 +70,39 @@
                 <td class="text-center">{{ task.name }}</td>
                 <td class="text-center"> {{ task.playbook }} </td>
                 <td id="status_{{ task.id }}" class="text-center"><span class="label {% ifequal task.status 'Y' %}label-success{% else %}label-danger{% endifequal %}">{{ task.get_status_display }}</span> </td>
-                <td id="exec_result_{{ task.id }}" class="text-center"> {% for result in task.execresult_set.all %}{{ result.host }}&nbsp;&nbsp;&nbsp;&nbsp;不可达:{{ result.unreachable }}&nbsp;&nbsp;跳过:{{ result.skipped }}&nbsp;&nbsp;成功：{{ result.ok }}&nbsp;&nbsp;改变:{{ result.changed }}&nbsp;&nbsp;失败:{{ result.failures }}<br /> {% endfor %} </td>
+                <td  id="exec_result_{{ task.id }}" class="text-center">
+                    <table class="table">
+                        <thead>
+                        <tr  >
+                        <th class="text-center info">主机</th>
+                        <th class="text-center warning">不可达</th>
+                        <th class="text-center active" >跳过</th>
+                        <th class="text-center success">成功</th>
+                        <th class="text-center success">改变</th>
+                        <th class="text-center danger">失败</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for result in task.execresult_set.all %}
+                            <tr>
+                                <td class="info">{{ result.host }}</td>
+                                <td class="warning">{{ result.unreachable }}</td>
+                                <td class="active">{{ result.skipped }}</td>
+                                <td class="success">{{ result.ok }}</td>
+                                <td class="success">{{ result.changed }}</td>
+                                <td class="danger">{{ result.failures }} </td>
+                            </tr>
+                                                {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                        <br />
+                </td>
                 <td class="text-center"> {{ task.exec_time}} </td>
                 <td class="text-center">
                         <button type="button"  data-id="{{ task.id }}" id="{{ task.id }}" class="btn btn-xs btn-info btn-execute" {% if task.status == 'Y' %}disabled{% endif %}>执行</button>
+                        <a href="{% url 'task:edit' task.id %}" class="btn btn-xs btn-primary" {% if task.status == 'Y' %}disabled{% endif %}>编辑</a>
                         <a href="{% url 'task:detail' task.id %}" class="btn btn-xs btn-success">详情</a>
                 </td>
             </tr>
@@ -133,5 +162,10 @@ $('.btn-execute').click(function () {
         }
     })
 })
+
+$(document).ready(function() {
+    $('.footable').footable();
+});
+
 
 {% endblock %}

@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become_user: root
+  gather_facts: false
+  tasks:
+  - name: "echo sth to file"
+    shell: echo "hello,world!"

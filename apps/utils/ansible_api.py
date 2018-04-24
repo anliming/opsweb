@@ -20,7 +20,7 @@ class AnsiblePlaybookAPI(object):
         runner_cb = callbacks.PlaybookRunnerCallbacks(self.stats, verbose=2)
         self.pb = ansible.playbook.PlayBook(
             playbook=self.playbook,
-            stats =self.stats,
+            stats=self.stats,
             extra_vars=self.extra_vars,
             callbacks=self.playbook_cb,
             runner_callbacks=runner_cb
@@ -33,11 +33,11 @@ class AnsiblePlaybookAPI(object):
 
         simple = self.pb.run()
         # 将最新的一条playbook执行详细结果存入临时文件，然后数据库
-        with open('/var/log/ansible/ansible.log.tmp', 'r') as f:
+        with open('/tmp/ansible/ansible.log.tmp', 'r') as f:
             detail = f.read()
 
         # 入库之后将临时文件清空
-        with open('/var/log/ansible/ansible.log.tmp', 'w') as f:
+        with open('/tmp/ansible/ansible.log.tmp', 'w') as f:
             pass
         # 将任务执行的状态和详细信息入库
         return {'simple': simple, 'detail': detail}

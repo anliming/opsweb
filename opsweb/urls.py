@@ -27,8 +27,6 @@ urlpatterns = [
     url('^dashboard/', include("dashboard.urls", namespace="dashboard")),
     url('^work_order/', include('work_order.urls', namespace='work_order')),
     url('^cmdb/', include('cmdb.urls', namespace='cmdb')),
-
-#    url('^task/', include('tasks.urls', namespace='task')),
-    
+    url('^task/', include('tasks.urls', namespace='task')),
     url('^books/', include('books.urls', namespace='books')),
 ]

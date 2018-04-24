@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+
+{% block title %}任务申请{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">任务申请</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">任务申请</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+
+
+    <form method="post" action="" class="form-horizontal">
+        <div class="form-group"><label class="col-sm-2 control-label">任务名称：</label>
+            <div class="col-sm-8">
+                <input type="text" name ="name" id="name" class="form-control" placeholder="任务名称" />
+                {% for error in forms.name.errors %}<span class="help-block m-b-none red">{{ error }}</span>{% endfor %}
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">脚本编辑：</label>
+             <div class="col-sm-8">
+                <pre id="code" class="ace_editor" style="min-height:400px"><textarea id="playbook_text" class="ace_text-input" name="playbook_text"></textarea></pre>
+                 {% for error in forms.playbook_text.errors %}<span class="help-block m-b-none red">{{ error }}</span>{% endfor %}
+             </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+                <button id="submit_button" class="btn btn-primary" type="button">添加任务</button>
+                <button class="btn btn-white" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+
+//初始化对象
+editor = ace.edit("code");
+
+//设置风格和语言（更多风格和语言，请到github上相应目录查看）
+theme = "clouds";
+language = "yaml";
+editor.setTheme("ace/theme/" + theme);
+editor.session.setMode("ace/mode/" + language);
+
+//字体大小
+editor.setFontSize(18);
+
+//设置只读（true时只读，用于展示代码）
+editor.setReadOnly(false);
+
+//自动换行,设置为off关闭
+editor.setOption("wrap", "free");
+
+
+//启用提示菜单
+ace.require("ace/ext/language_tools");
+editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+
+$('#submit_button').on('click', function () {
+    var playbook_name = document.getElementById('name').value;
+    var playbook_text = editor.getValue();
+    if(playbook_name === '' || playbook_text === ''){
+        swal('提示!', '请将表单填写完整～', 'warning');
+        return false
+    }
+     $.ajax({
+        type: "POST",
+        url: "{% url 'task:add1' %}",
+        data:{'name': playbook_name, 'playbook_text': playbook_text},
+        success: function(data){
+            window.location.href = "{% url 'task:list' %}"
+        }
+    })
+});
+
+{% endblock %}
