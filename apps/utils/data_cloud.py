@@ -10,7 +10,7 @@ def get_hosts_from_aliyun():
     :return:
     """
 <<<<<<< HEAD
-    ecs = ECSHandler('LTAI2bp5xMMGLjxt','1Ias4RC3kaAeJgLB85vjzjXYdv2axB','cn-zhangjiakou')
+    ecs = ECSHandler('LTjxt','1Ias4v2axB','cnou')
 =======
     ecs = ECSHandler('L','V7','cn-beijing')
 >>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
