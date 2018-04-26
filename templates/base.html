@@ -247,22 +247,68 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-book"></i>
-            <span>图书管理系统</span>
+            <i class="fa fa-tasks"></i>
+            <span>SQL上线系统</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle"></i><span>sql上线</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="ckli"><a href="/sqlmng/inception_check/" target="mainPage"><i class="fa fa-circle-o"></i>审核</a></li>
+                    <li class="ckli"><a href="/sqlmng/inception_result/" target="mainPage"><i class="fa fa-circle-o"></i>处理</a></li>
+                </ul>
+            </li>
 
-                <li><a href="{% url 'books:book_list' %}"><i class="fa fa-circle-o"></i> 图书</a></li>
-              {% if perms.books.book_admin %}
-                <li><a href="{% url 'books:author_list' %}"><i class="fa fa-circle-o"></i> 作者</a></li>
-                <li><a href="{% url 'books:publish_list' %}"><i class="fa fa-circle-o"></i> 出版商</a></li>
-              {% endif %}
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle"></i><span>sql优化</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="ckli"><a href="/sqlmng/optimize_check/" target="mainPage"><i class="fa fa-circle-o"></i>提交</a></li>
+                    <li class="ckli"><a href="/sqlmng/optimize_result/" target="mainPage"><i class="fa fa-circle-o"></i>记录</a></li>
+                </ul>
+            </li>
+
+            {% if request.user.is_superuser %}
+            <li class="treeview">
+                <a href="/sqlmng/dbconfig/" target="mainPage">
+                    <i class="fa fa-circle"></i><span>数据库配置</span>
+                </a>
+            </li>
+            {% endif %}
 
           </ul>
         </li>
+
+        <!--<li class="treeview">-->
+          <!--<a href="#">-->
+            <!--<i class="fa fa-book"></i>-->
+            <!--<span>图书管理系统</span>-->
+            <!--<span class="pull-right-container">-->
+              <!--<i class="fa fa-angle-left pull-right"></i>-->
+            <!--</span>-->
+          <!--</a>-->
+          <!--<ul class="treeview-menu">-->
+
+                <!--<li><a href="{% url 'books:book_list' %}"><i class="fa fa-circle-o"></i> 图书</a></li>-->
+              <!--{% if perms.books.book_admin %}-->
+                <!--<li><a href="{% url 'books:author_list' %}"><i class="fa fa-circle-o"></i> 作者</a></li>-->
+                <!--<li><a href="{% url 'books:publish_list' %}"><i class="fa fa-circle-o"></i> 出版商</a></li>-->
+              <!--{% endif %}-->
+
+          <!--</ul>-->
+        <!--</li>-->
 	
       </ul>
     </section>

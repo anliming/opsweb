@@ -1,0 +1,153 @@
+
+{% extends "base.html" %}
+
+{% block title %}SQL上线系统{% endblock %}
+
+{% block content %}
+{% include 'sqlmng/modal.html' %}
+
+<div class="breadcrumbs" id="breadcrumbs">        
+
+    <ul class="breadcrumb">
+        <li>
+        <i class="icon-home home-icon"></i>
+        <a href="#">Home</a>
+        </li>
+
+        <li>
+        <a href="#">运维工具</a>
+        </li>
+
+        <li>
+        <a href="#">SQL查询优化</a>
+        </li>
+
+        <li class="active">提交</li>
+
+    </ul><!-- .breadcrumb -->
+
+</div>
+
+<div class="page-content">
+
+<div class="row">
+    <div class="col-md-12">
+	<div class="panel panel-default">
+            <div class="panel-heading">请输入需要优化的SQL语句</div>
+		<div class="panel-body">
+
+      <div class="col-sm-7">
+          <textarea id="sqltext" style="margin-bottom:20px" placeholder="SQL语句" class="col-xs-10 col-sm-12" rows="12"></textarea>
+	  <input id="note" type="text" class="form-control" placeholder="备注" />
+      </div>
+      <div class="col-sm-5">
+	<div id="div5-1">
+	    <div class="col-sm-5">
+		<span style="margin-left:8%;font-size:16px; color:#4682B4; font-weight:bold "> 选择环境： </span>
+	    </div>
+	    <div class="col-sm-7">
+		<label style="margin-right:20%">
+	   	    <input value="2" name="form-field-radio" type="radio" class="ace" />
+	   	    <span class="lbl"> 测试</span>
+		</label>
+		<label>
+	   	    <input value="1" name="form-field-radio" type="radio" class="ace" />
+	   	    <span class="lbl"> 线上</span>
+		</label>
+	    </div>
+	</div>
+	</br></br>
+	<div id="div5-2">
+	    <div class="col-sm-5">
+	        <span style="margin-left:8%; font-size:16px; color:#4682B4; font-weight:bold "> 选择数据库： </span>
+	    </div>
+	    <div class="col-sm-7">
+	    	<select id='targetdb' class="form-control"> </select>
+	    </div>
+	</div>
+      </div>
+    </div>
+
+    <div class="clearfix form-actions">
+      <div class="col-md-offset-0 col-md-12" style="margin-left:15%">
+        <button id='sqlinputbtn' style="margin-top:20px" class="btn btn-info" type="submit">
+            <i class="icon-ok bigger-110"></i>
+            提交
+        </button>
+        <button style="margin-top:20px; margin-left:15%" class="btn reset">
+            <i class="icon-undo bigger-110"></i>
+            清空                                                                                                
+        </button>
+      </div> 
+    </div>
+
+<!--  </form> -->
+</br></br>
+
+	        </div>
+	    </div>
+	</div>
+    </div>
+
+<script>
+
+$('.ace').change(function(){
+    var env = $('input[name="form-field-radio"]').filter(':checked').val()
+    $.ajax({
+        type: "post",
+        url: "{% url 'autoselect' %}",
+        data: {env:env},
+        dataType: "json",
+        success: function(data){
+            dbs = data.dbs
+            $('#targetdb').empty()
+            for(i in dbs) {
+                var dbshtml = '<option>' + dbs[i] + '</option>'  // 生成数据
+                $('#targetdb').append(dbshtml)  // 给模态框渲染dbname数据
+            }
+        },
+        error: function(){
+            //显示错误信息
+        },
+	})
+})
+
+$('.reset').click(function(){
+	$('#sqltext').val('')
+})
+
+$('#sqlinputbtn').click(function(){
+	var env = $('input[name="form-field-radio"]').filter(':checked').val()
+	var sqlcontent = $.trim($('#sqltext').val())
+	var dbname = $('#targetdb').val()
+	var note = $.trim($('#note').val())
+	if (sqlcontent == ''){
+		$('#infomodal').modal({show:true, backdrop: 'static'})
+		$('#inforz').html('Warning：SQL输入不能为空！')
+		return false
+	}
+	if (dbname == null){
+        $('#infomodal').modal({show:true, backdrop: 'static'})
+        $('#inforz').html('Wrning：请选择数据库')
+		return false
+	}
+    $('.btn').attr({"disabled":"disabled"})  // 所有按钮禁用
+    $.ajax({
+        type: "post",
+        url: "{% url 'optimize_check' %}",
+        data: {sqlcontent:sqlcontent, dbname:dbname, env:env, note:note},
+        dataType: "json",
+        success: function(result){
+            $('.btn').removeAttr("disabled")  // 所有按钮启用
+			data = result.data
+			$('#sqlmodal').modal({show:true, backdrop: 'static'})
+			$('#sqltitle').html('SQL优化结果')
+			$('#sqlrz').html('<pre>'+data+'</pre>')
+        },
+    })
+})
+
+</script>
+
+{% endblock %}
+

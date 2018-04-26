@@ -4,3 +4,4 @@ logs/celery/*.log
 opsweb/settings.py
 apps/utils/data_cloud.py
 *.pyc
+media/playbook/*
