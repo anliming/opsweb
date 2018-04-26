@@ -9,15 +9,7 @@ def get_hosts_from_aliyun():
     从阿里云获取ECS实例并入库
     :return:
     """
-<<<<<<< HEAD
     ecs = ECSHandler('LTAI2bp5xMMGLjxt','1Ias4RC3kaAeJgLB85vjzjXYdv2axB','cn-zhangjiakou')
-=======
-<<<<<<< HEAD
-    ecs = ECSHandler('LTjxt','1Ias4v2axB','cnou')
-=======
-    ecs = ECSHandler('L','V7','cn-beijing')
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
->>>>>>> 4d865a1c916b0c1da64c646cf56ad25ead0888aa
     page = 1
     while True:
         instances, exception, next_page = ecs.get_instances(page)
@@ -88,15 +80,7 @@ def get_hosts_from_cloud():
     :return:
     """
     aliyun_success = get_hosts_from_aliyun()
-<<<<<<< HEAD
 #    qcloud_success = get_hosts_from_qcloud()
-=======
-<<<<<<< HEAD
-#    qcloud_success = get_hosts_from_qcloud()
-=======
-    qcloud_success = get_hosts_from_qcloud()
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
->>>>>>> 4d865a1c916b0c1da64c646cf56ad25ead0888aa
     if aliyun_success:
         return True
     else:
