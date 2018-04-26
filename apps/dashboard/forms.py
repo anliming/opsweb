@@ -14,25 +14,4 @@ class UserProfileForm(forms.Form):
     username = forms.CharField(required=True, max_length=30)
     name_cn = forms.CharField(required=True, max_length=30)
     phone = forms.CharField(required=True, max_length=11)
-<<<<<<< HEAD
     email = forms.EmailField(required=True, max_length=20)
-=======
-    email = forms.EmailField(required=True, max_length=20)
-
-
-class PermForm(forms.ModelForm):
-    class Meta:
-        model = Permission
-        fields = "__all__"
-
-class PermUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Permission
-        fields = ['name','codename']
-        # exclude = ['content_type']
-
-class GroupForm(forms.ModelForm):
-    class Meta:
-        model = Group
-        fields = "__all__"
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5

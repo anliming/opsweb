@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-<<<<<<< HEAD
 {% load mytags %}
-=======
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 
   {% block title %}首页{% endblock %}
 
@@ -76,11 +73,7 @@
                      <div>
                          <select id="perms_selected" name="perms_selected" class="form-control m-b" size="12"  multiple>
                              {% for perm in group_has_permissions %}
-<<<<<<< HEAD
                             <option value="{{ perm.id }}" >{{ perm.name }}</option>
-=======
-                            <option value="{{ perm.id }}" selected >{{ perm.name }}</option>
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                             {% endfor %}
                          </select>
                     </div>
@@ -91,11 +84,7 @@
        <div class="hr-line-dashed"></div>
        <div class="form-group">
              <div class="col-sm-4 col-sm-offset-2">
-<<<<<<< HEAD
                  <button class="btn btn-white" type="reset" href="{% url 'dashboard:group_list' %}">取消</button>
-=======
-                 <button class="btn btn-white" type="reset">取消</button>
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                  <button id="submit_button" class="btn btn-primary" type="submit">确认</button>
             </div>
        </div>

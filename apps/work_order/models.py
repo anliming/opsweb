@@ -2,11 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from dashboard.models import UserProfile
-<<<<<<< HEAD
 import datetime
-=======
-
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 
 class WorkOrder(models.Model):
     ORDER_TYPE = (
@@ -40,7 +36,6 @@ class WorkOrder(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['-complete_time']
 
-<<<<<<< HEAD
 class  OrderStatistics(models.Model):
      uid = models.ForeignKey(UserProfile, verbose_name=u'用户名')
      type0 = models.IntegerField(default=0, verbose_name=u'工单类型_数据库')
@@ -49,5 +44,3 @@ class  OrderStatistics(models.Model):
      type3 = models.IntegerField(default=0, verbose_name=u'工单类型_配置文件')
      type4 = models.IntegerField(default=0, verbose_name=u'工单类型_其他')
      statime = models.DateField(default=(datetime.date.today() - datetime.timedelta(days=1)), verbose_name=u'处理完成时间')
-=======
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5

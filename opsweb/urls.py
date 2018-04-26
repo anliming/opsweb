@@ -15,12 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-<<<<<<< HEAD
 
 from dashboard.views import LoginView, LogoutView, IndexView
-=======
-from dashboard.views import LoginView, LogoutView, IndexView,TestView
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,19 +24,9 @@ urlpatterns = [
     url('^index/', IndexView.as_view(), name='index'),
     url('^login/', LoginView.as_view(), name='login'),
     url('^logout/', LogoutView.as_view(), name='logout'),
-<<<<<<< HEAD
     url('^dashboard/', include("dashboard.urls", namespace="dashboard")),
     url('^work_order/', include('work_order.urls', namespace='work_order')),
     url('^cmdb/', include('cmdb.urls', namespace='cmdb')),
     url('^task/', include('tasks.urls', namespace='task')),
-=======
-    url('^test/', TestView.as_view(), name='test'),
-
-    url('^dashboard/', include("dashboard.urls", namespace="dashboard")),
-
-    url('^work_order/', include('work_order.urls', namespace='work_order')),
-    url('^cmdb/', include('cmdb.urls', namespace='cmdb')),
-    #url('^task/', include('tasks.urls', namespace='task')),
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     url('^books/', include('books.urls', namespace='books')),
 ]

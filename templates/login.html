@@ -38,14 +38,10 @@
         <input id="password" type="password" class="form-control" placeholder="密码">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-<<<<<<< HEAD
 {#      <div class="form-group has-feedback">#}
 {#        <input id="token" type="text" class="form-control" placeholder="动态口令">#}
 {#        <span class="glyphicon glyphicon-lock form-control-feedback"></span>#}
 {#      </div>#}
-=======
-
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
       <div class="row">
         <div class="col-xs-8">
             <span id="errors" style="color:red"></span>
@@ -54,10 +50,6 @@
           <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
         </div>
       </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     </form>
 
     <a href="#">忘记密码</a><br>
@@ -74,7 +66,6 @@
 
 <script>
 $('button').click(function(){
-<<<<<<< HEAD
     var username = $('#user').val();
     var password = $('#password').val();
 {#    var token = $('#token').val();#}
@@ -90,21 +81,6 @@ $('button').click(function(){
                     location.href = data['next_url']
                  } else {
                     console.log(data);
-=======
-    var username = $('#user').val()
-    var password = $('#password').val()
-    $.ajax({
-             type: "POST",
-             url: "/login/",
-             data: {username:username, password:password},
-             dataType: "json",
-             success: function(data){
-                 status = data.code
-                 if (status == 0){
-                    location.href = data['next_url']
-                 } else {
-                    console.log(data)
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                     $('#errors').html(data['errmsg'])
                  }
              },
@@ -112,10 +88,6 @@ $('button').click(function(){
             },
 	})
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 })
 
 </script>

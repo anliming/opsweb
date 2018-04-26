@@ -59,11 +59,7 @@
                 <th class="text-center">任务名称</th>
                 <th class="text-center">Playbook</th>
                 <th class="text-center">执行状态</th>
-<<<<<<< HEAD
                 <th data-hide="all" class="text-center">执行结果</th>
-=======
-                <th class="text-center">执行结果</th>
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                 <th class="text-center">添加时间</th>
                 <th class="text-center">操作</th>
             </tr>
@@ -74,7 +70,6 @@
                 <td class="text-center">{{ task.name }}</td>
                 <td class="text-center"> {{ task.playbook }} </td>
                 <td id="status_{{ task.id }}" class="text-center"><span class="label {% ifequal task.status 'Y' %}label-success{% else %}label-danger{% endifequal %}">{{ task.get_status_display }}</span> </td>
-<<<<<<< HEAD
                 <td  id="exec_result_{{ task.id }}" class="text-center">
                     <table class="table">
                         <thead>
@@ -104,9 +99,6 @@
 
                         <br />
                 </td>
-=======
-                <td id="exec_result_{{ task.id }}" class="text-center"> {% for result in task.execresult_set.all %}{{ result.host }}&nbsp;&nbsp;&nbsp;&nbsp;不可达:{{ result.unreachable }}&nbsp;&nbsp;跳过:{{ result.skipped }}&nbsp;&nbsp;成功：{{ result.ok }}&nbsp;&nbsp;改变:{{ result.changed }}&nbsp;&nbsp;失败:{{ result.failures }}<br /> {% endfor %} </td>
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                 <td class="text-center"> {{ task.exec_time}} </td>
                 <td class="text-center">
                         <button type="button"  data-id="{{ task.id }}" id="{{ task.id }}" class="btn btn-xs btn-info btn-execute" {% if task.status == 'Y' %}disabled{% endif %}>执行</button>
@@ -171,12 +163,9 @@ $('.btn-execute').click(function () {
     })
 })
 
-<<<<<<< HEAD
 $(document).ready(function() {
     $('.footable').footable();
 });
 
 
-=======
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
 {% endblock %}

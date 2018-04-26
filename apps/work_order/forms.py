@@ -18,10 +18,6 @@ class WorkOrderApplyForm(forms.Form):
                                     widget=forms.Textarea(attrs={'class': 'form-control',
                                                                   'rows': 8, 'placeholder': '工单详细内容'}))
     assign_to = forms.ChoiceField(widget=forms.Select(attrs={'class': 'assign-to form-control'}, choices=assign_to_sa))
-<<<<<<< HEAD
-=======
-    # assign_to = forms.CharField(widget=forms.Select(attrs={'class': 'assign-to form-control'}, choices=assign_to_sa))
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
     # assign_to = forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'class': 'assign-to form-control'}, choices=assign_to_sa))
 
     # 知识点 指派给用户的时候，如果用户更新了 指派的下拉列表也得更新

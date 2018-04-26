@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 
 {% load mytags %}
-<<<<<<< HEAD
-=======
-
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
   {% block title %}首页{% endblock %}
   {% block css %}
   <style>
@@ -84,11 +80,7 @@
                     <td class="text-center"> {{ group.user_set.all | userlist_str2| default:'无' }}
                     <a class="btn btn-xs btn-info more" gid="{{group.id}}" gname="{{group.name}}">更多</a>
                     </td>
-<<<<<<< HEAD
                     <td class="text-center"> {{ group.permissions.all | group_str2 | default:'无'  }} </td>
-=======
-                    <td class="text-center"> {{ group.permissions.all | perm_str2 | default:'无'  }} </td>
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                     <td class="text-center">
                        <div class="btn-group">
                             <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
@@ -178,7 +170,6 @@ $("tbody").on('click','.delete',function(){
             success: function(res){
                 console.log(res)
                 if (res.code ==0){
-<<<<<<< HEAD
                     swal({
                     "title": "删除成功",
                     "text": "",
@@ -188,10 +179,6 @@ $("tbody").on('click','.delete',function(){
                             window.location.reload();
                 },50);
             })
-=======
-                    swal("Good!", res.result, "success")
-                    window.location.reload();
->>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
                 }else{
                     swal("操作失败", res.errmsg, "error")
                 }

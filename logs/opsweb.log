@@ -1,1 +1,6 @@
-xxx
+[2018-03-18 10:27:33,865] [23552] [140417018242816] [     __init__.py:  54] [ERROR ] errmsg
+[2018-03-18 10:28:07,255] [23552] [140417018242816] [     __init__.py:  51] [INFO  ] admin 新填加书成功
+[2018-03-18 10:29:16,883] [23552] [140417018242816] [     __init__.py:  54] [ERROR ] errmsg
+[2018-03-18 10:31:06,314] [26168] [140122451343104] [     __init__.py:  54] [ERROR ] errmsg <ul class="errorlist"><li>publication_date<ul class="errorlist"><li>这个字段是必填项。</li></ul></li><li>name<ul class="errorlist"><li>这个字段是必填项。</li></ul></li><li>authors<ul class="errorlist"><li>这个字段是必填项。</li></ul></li></ul> 
+[2018-03-18 15:59:58,126] [14085] [140119549933312] [     __init__.py:  54] [ERROR ] errmsg <ul class="errorlist"><li>publication_date<ul class="errorlist"><li>这个字段是必填项。</li></ul></li><li>name<ul class="errorlist"><li>这个字段是必填项。</li></ul></li><li>authors<ul class="errorlist"><li>这个字段是必填项。</li></ul></li></ul> 
+[2018-03-18 16:00:44,636] [14085] [140119549933312] [     __init__.py:  51] [INFO  ] admin 新填加书成功
