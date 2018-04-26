@@ -154,6 +154,7 @@ LOGIN_URL = "/login/"
 
 JUMP_PAGE = "jump.html"
 
+<<<<<<< HEAD
 EMAIL_HOST = "smtp.yktour.com.cn"
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "anliming@yktour.com.cn"
@@ -161,6 +162,17 @@ EMAIL_HOST_PASSWORD = "alm@1234"
 #EMAIL_USE_TLS = True
 EMAIL_USE_SSL = True
 EMAIL_FROM = "anliming@yktour.com.cn"
+=======
+
+=======
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "admin@anliming.com"
+EMAIL_HOST_PASSWORD = "anliming123"
+EMAIL_USE_SSL = True
+EMAIL_FROM = "admin@anliming.com"
+>>>>>>> 0806a45f79e0ae7f8f862b7984b0ba58c1c14aa5
+>>>>>>> 4d865a1c916b0c1da64c646cf56ad25ead0888aa
 
 
 LOGGING = {
