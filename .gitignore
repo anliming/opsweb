@@ -1,0 +1,4 @@
+
+logs/*
+opsweb/settings.py
+apps/utils/data_cloud.py
