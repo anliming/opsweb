@@ -7,7 +7,6 @@ def table_structure(dbaddr, dbname, sqlcontent):
       inception_magic_start;\
       use %s; %s inception_magic_commit;' % (dbaddr, dbname, sqlcontent)
     try:
-        #conn = MySQLdb.connect(host='172.16.98.12',user='root',passwd='',db='',port=6669,use_unicode=True, charset="utf8")
         conn = MySQLdb.connect(host='127.0.0.1',user='root',passwd='',port=6669,db='',use_unicode=True,charset="utf8")  # 连接inception
         cur = conn.cursor()
         cur.execute(sql)
@@ -19,7 +18,7 @@ def table_structure(dbaddr, dbname, sqlcontent):
     return result
 
 def getbak(sql, dbname=''):
-    conn = MySQLdb.connect(host = '127.0.0.1', port = 3306, user = 'root', passwd = 'xinwei', db = dbname, charset = 'utf8')
+    conn = MySQLdb.connect(host = '127.0.0.1', port = 3306, user = 'root', passwd = '123456', db = dbname, charset = 'utf8')
     conn.autocommit(True)
     cur = conn.cursor()
     cur.execute(sql)
