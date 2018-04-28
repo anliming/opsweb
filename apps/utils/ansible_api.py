@@ -1,43 +1,65 @@
 # encoding: utf-8
+import json
+import datetime
 import ansible.runner
 import ansible.playbook
 import ansible.inventory
 from ansible import callbacks
 from ansible import utils
 
+class AllStats(callbacks.AggregateStats):
+    def __init__(self):
+        self.results = {}
+        super(AllStats, self).__init__()
+
+    def compute(self, runner_results, setup=False, poll=False, ignore_errors=False):
+        super(AllStats, self).compute(runner_results, setup=False, poll=False, ignore_errors=False)
+        for host, value in runner_results.get('contacted', {}).iteritems():
+            executed = value.pop("invocation", None)
+            host_details = self.results.setdefault(host, {})
+            task_done = host_details.setdefault('details', [])
+            task_done.append({"executed": executed, "log": value,
+                              "@timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+
+        for host, value in runner_results.get('dark', {}).iteritems():
+            host_details = self.results.setdefault(host, {})
+            task_done = host_details.setdefault('details', [])
+            task_done.append({"executed": None, "log": value,
+                              "@timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+
+    def summarize(self, host):
+        summary = super(AllStats, self).summarize(host)
+        summary.update(self.results.get(host, {}))
+        return summary
+
 
 class AnsiblePlaybookAPI(object):
     """1.9.x 上通过测试 """
     def __init__(self, playbook, extra_vars={}):   # 初始化参数
-        self.stats = callbacks.AggregateStats()
+        self.stats = AllStats()
         self.playbook_cb = callbacks.PlaybookCallbacks(verbose=utils.VERBOSITY)
+        self.runner_cb = callbacks.PlaybookRunnerCallbacks(self.stats, verbose=2)
         self.extra_vars = extra_vars
         self.playbook = playbook
         self.setbook = self.book_set()
 
     def book_set(self):
-        #runner_cb = callbacks.PlaybookRunnerCallbacks(self.stats, verbose=utils.VERBOSITY)
-        runner_cb = callbacks.PlaybookRunnerCallbacks(self.stats, verbose=2)
         self.pb = ansible.playbook.PlayBook(
             playbook=self.playbook,
-            stats=self.stats,
+            stats =self.stats,
             extra_vars=self.extra_vars,
             callbacks=self.playbook_cb,
-            runner_callbacks=runner_cb
+            runner_callbacks=self.runner_cb
         )
 
     def run(self):
         """
         playbook执行
         """
-
-        simple = self.pb.run()
-        # 将最新的一条playbook执行详细结果存入临时文件，然后数据库
-        with open('/tmp/ansible/ansible.log.tmp', 'r') as f:
-            detail = f.read()
-
-        # 入库之后将临时文件清空
-        with open('/tmp/ansible/ansible.log.tmp', 'w') as f:
-            pass
-        # 将任务执行的状态和详细信息入库
-        return {'simple': simple, 'detail': detail}
+        results = self.pb.run()
+        simple = {}
+        detail = {}
+        for host, summary in results.iteritems():
+            detail[host] = summary.pop('details', {})
+            simple[host] = summary
+        return {'simple': simple, 'detail': json.dumps(detail, indent=4)}

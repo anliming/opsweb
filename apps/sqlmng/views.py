@@ -160,57 +160,57 @@ class inception_result(LoginRequiredMixin, View):
                 note = sqlinfo.note + '   [' + username + '代回滚]'
                 sqlinfo.note = note
         sqlinfo.save()
-        print ret
         return JsonResponse(ret)
 
 # 审核
 class inception_check(LoginRequiredMixin, TemplateView):
     template_name = 'sqlmng/inception_check.html'
-    forbiddeneword = ['use ', ]
-    def post(self, request):
-        webdata = QueryDict(request.body).dict()
-        username = request.user.get_username()
-        sqlcontent = webdata.get('sqlcontent')
-        dbname = webdata.get('dbname')
-        treater = webdata.get('treater')
-        env = webdata.get('env')
-        note = webdata.get('note')
-        # 禁止词汇过滤
-        for fword in self.forbiddeneword:
-            pf = re.compile(fword, re.I)
-            if re.search(pf, sqlcontent):
-                return JsonResponse({'status':-1, 'fword':fword})
-        # 根据选择的数据库环境，匹配地址
-        dbobj = dbconf.objects.get(name=dbname, env=env)
-        pc = prpcrypt(crykey)
-        dbpasspwd = pc.decrypt(dbobj.password)
-        dbaddr = '--user=%s; --password=%s; --host=%s; --port=%s; --enable-check;' % (dbobj.user, dbpasspwd, dbobj.host, dbobj.port)  # 根据数据库名 匹配其地址信息，"--check=1;" 只审核
-        # 配置文件的inception部分
-        sql_review = inception.table_structure(dbaddr, dbname, sqlcontent)  # 审核
-        # 判断检测错误，有则返回
-        errorsql = []
-        for perrz in sql_review:
-            if perrz[4] != 'None':
-                errorsql.append(perrz[4])
-        if errorsql:
-            return JsonResponse({'status': -2, 'msg': errorsql})
-        # 审核通过，写入数据库
-        # 从数据库获取commiter和treater的信息（没有的话写入）
-        utreater = UserProfile.objects.get_or_create(username = treater)  # 经理数据
-        ucommiter = UserProfile.objects.get(username = username)  # 用户数据（是一定有的，因为他提交的SQL 所以他必然登录过了）
-        # 写入sql信息
-        # InceptSql 的 status 由treater操作后改写
-        webdata['commiter'] = username
-        sqlobj = InceptSql.objects.create(**webdata)
-        sqlobj.sqlusers.add(utreater[0], ucommiter)
-        if env == '1':  # 生产环境，发邮件提醒
-            mailto_users = [username, treater, ]
-            mailto_users = list(set(mailto_users))  # 去重（避免提交人和执行人是同一人，每次收2封邮件的bug）
-            mailto_list = [UserProfile.objects.get(username=username).email for m in mailto_users]
-            # 发送邮件，并判断结果
-            mailtype = 'commit'
-            send_mail.delay(mailto_list, username, sqlobj.id, note, mailtype, sqlcontent, dbname)
-        return JsonResponse({'status':0})
+    # template_name = 'sqlmng/inception_check.html'
+    # forbiddeneword = ['use ', ]
+    # def post(self, request):
+    #     webdata = QueryDict(request.body).dict()
+    #     username = request.user.get_username()
+    #     sqlcontent = webdata.get('sqlcontent')
+    #     dbname = webdata.get('dbname')
+    #     treater = webdata.get('treater')
+    #     env = webdata.get('env')
+    #     note = webdata.get('note')
+    #     # 禁止词汇过滤
+    #     for fword in self.forbiddeneword:
+    #         pf = re.compile(fword, re.I)
+    #         if re.search(pf, sqlcontent):
+    #             return JsonResponse({'status':-1, 'fword':fword})
+    #     # 根据选择的数据库环境，匹配地址
+    #     dbobj = dbconf.objects.get(name=dbname, env=env)
+    #     pc = prpcrypt(crykey)
+    #     dbpasspwd = pc.decrypt(dbobj.password)
+    #     dbaddr = '--user=%s; --password=%s; --host=%s; --port=%s; --enable-check;' % (dbobj.user, dbpasspwd, dbobj.host, dbobj.port)  # 根据数据库名 匹配其地址信息，"--check=1;" 只审核
+    #     # 配置文件的inception部分
+    #     sql_review = inception.table_structure(dbaddr, dbname, sqlcontent)  # 审核
+    #     # 判断检测错误，有则返回
+    #     errorsql = []
+    #     for perrz in sql_review:
+    #         if perrz[4] != 'None':
+    #             errorsql.append(perrz[4])
+    #     if errorsql:
+    #         return JsonResponse({'status': -2, 'msg': errorsql})
+    #     # 审核通过，写入数据库
+    #     # 从数据库获取commiter和treater的信息（没有的话写入）
+    #     utreater = UserProfile.objects.get_or_create(username = treater)  # 经理数据
+    #     ucommiter = UserProfile.objects.get(username = username)  # 用户数据（是一定有的，因为他提交的SQL 所以他必然登录过了）
+    #     # 写入sql信息
+    #     # InceptSql 的 status 由treater操作后改写
+    #     webdata['commiter'] = username
+    #     sqlobj = InceptSql.objects.create(**webdata)
+    #     sqlobj.sqlusers.add(utreater[0], ucommiter)
+    #     if env == '1':  # 生产环境，发邮件提醒
+    #         mailto_users = [username, treater, ]
+    #         mailto_users = list(set(mailto_users))  # 去重（避免提交人和执行人是同一人，每次收2封邮件的bug）
+    #         mailto_list = [UserProfile.objects.get(username=username).email for m in mailto_users]
+    #         # 发送邮件，并判断结果
+    #         mailtype = 'commit'
+    #         send_mail.delay(mailto_list, username, sqlobj.id, note, mailtype, sqlcontent, dbname)
+    #     return JsonResponse({'status':0})
 
 class autoselect(LoginRequiredMixin, View):
     def post(self, request):  # 前端切换环境时，返回相应的数据（执行人，数据库名）
@@ -281,44 +281,44 @@ class dbconfig(LoginRequiredMixin, ListView):
     template_name = 'sqlmng/dbconfig.html'
     paginate_by = 10
     context_object_name = 'res_data'
-
-    def get_queryset(self):
-        souword = self.request.GET.get('souword','')
-        return self.model.objects.filter(name__contains=souword)
-
-    def post(self, request, **kwargs):
-        webdata = QueryDict(request.body).dict()
-        dbexsit = self.model.objects.filter(name = webdata.get('name'))
-        if dbexsit:
-            ret = {'status':-1}
-        else:
-            # 取前端传来的的password
-            password = webdata.get('password')
-            # 对password加密
-            pc = prpcrypt(crykey)
-            crypassword = pc.encrypt(password)
-            # 替换webdata的password
-            webdata['password'] = crypassword
-            # 写入数据库
-            self.model.objects.create(**webdata)
-            # 返回数据
-            ret = {'status':0}
-        return JsonResponse(ret)
-
-    def delete(self, request, **kwargs):
-        self.model.objects.get(pk=kwargs.get('pk')).delete()
-        return JsonResponse({'status':0})
-
-    def put(self, request, **kwargs):
-        # 密码的修改逻辑：如果密码没变化就直接保存，有变化就加密后保存
-        webdata = QueryDict(request.body).dict()
-        pk = kwargs.get('pk')
-        obj = self.model.objects.get(pk=pk)
-        password = webdata.get('password')
-        if obj.password != password:  # 密码被做了修改
-            pc = prpcrypt(crykey)
-            webdata['password'] = pc.encrypt(password)
-        self.model.objects.filter(pk=pk).update(**webdata)
-        return JsonResponse({'status':0})
-
+    #
+    # def get_queryset(self):
+    #     souword = self.request.GET.get('souword','')
+    #     return self.model.objects.filter(name__contains=souword)
+    #
+    # def post(self, request, **kwargs):
+    #     webdata = QueryDict(request.body).dict()
+    #     dbexsit = self.model.objects.filter(name = webdata.get('name'))
+    #     if dbexsit:
+    #         ret = {'status':-1}
+    #     else:
+    #         # 取前端传来的的password
+    #         password = webdata.get('password')
+    #         # 对password加密
+    #         pc = prpcrypt(crykey)
+    #         crypassword = pc.encrypt(password)
+    #         # 替换webdata的password
+    #         webdata['password'] = crypassword
+    #         # 写入数据库
+    #         self.model.objects.create(**webdata)
+    #         # 返回数据
+    #         ret = {'status':0}
+    #     return JsonResponse(ret)
+    #
+    # def delete(self, request, **kwargs):
+    #     self.model.objects.get(pk=kwargs.get('pk')).delete()
+    #     return JsonResponse({'status':0})
+    #
+    # def put(self, request, **kwargs):
+    #     # 密码的修改逻辑：如果密码没变化就直接保存，有变化就加密后保存
+    #     webdata = QueryDict(request.body).dict()
+    #     pk = kwargs.get('pk')
+    #     obj = self.model.objects.get(pk=pk)
+    #     password = webdata.get('password')
+    #     if obj.password != password:  # 密码被做了修改
+    #         pc = prpcrypt(crykey)
+    #         webdata['password'] = pc.encrypt(password)
+    #     self.model.objects.filter(pk=pk).update(**webdata)
+    #     return JsonResponse({'status':0})
+    #
 

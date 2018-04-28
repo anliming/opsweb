@@ -4,7 +4,7 @@
     {% include "sqlmng/modal.html" %}
     <div>
         <ol class="breadcrumb">
-            <li><a href="/sql/dbconfig/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/sqlmng/dbconfig/"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">数据库配置</li>
         </ol>
     </div>
@@ -60,240 +60,30 @@
         <div class="panel-default">
             <center>
                 <ul class="pagination">
-                    <li><a href="{% url 'dbconfig' %}?page=1">&laquo;</a></li>
+                    <li><a href="{% url 'sqlmng:dbconfig' %}?page=1">&laquo;</a></li>
                     {% if page_obj.has_previous %}
-                    <li><a href="{% url 'dbconfig' %}?page={{ page_obj.previous_page_number }}&souword={{ request.GET.souword }}">上一页</a></li>
+                    <li><a href="{% url 'sqlmng:dbconfig' %}?page={{ page_obj.previous_page_number }}&souword={{ request.GET.souword }}">上一页</a></li>
                     {% else %}
                         <li class="previous disabled"><a>上一页</a></li>
                     {% endif %}
                     {% for i in page_obj.paginator.page_range %}
-                    <li {% if page_obj.number == i %}class="active"{% endif %}><a href="{% url 'dbconfig' %}?page={{ i }}&souword={{ request.GET.souword }}">{{ i }}</a></li>
+                    <li {% if page_obj.number == i %}class="active"{% endif %}><a href="{% url 'sqlmng:dbconfig' %}?page={{ i }}&souword={{ request.GET.souword }}">{{ i }}</a></li>
                     {% endfor %}
                     {% if page_obj.has_next %}
-                    <li><a href="{% url 'dbconfig' %}?page={{ page_obj.next_page_number }}&souword={{ request.GET.souword }}">下一页</a></li>
+                    <li><a href="{% url 'sqlmng:dbconfig' %}?page={{ page_obj.next_page_number }}&souword={{ request.GET.souword }}">下一页</a></li>
                     {% else %}
                         <li class="previous disabled"><a>下一页</a></li>
                     {% endif %}
-                    <li><a href="{% url 'dbconfig' %}?page={{ page_obj.paginator.num_pages }}&souword={{ request.GET.souword }}">&raquo;</a></li>
+                    <li><a href="{% url 'sqlmng:dbconfig' %}?page={{ page_obj.paginator.num_pages }}&souword={{ request.GET.souword }}">&raquo;</a></li>
                 </ul>
             </center>
         </div>
     </div>
     <!-- <script src="/static/js/cmdbvp.js"></script> -->
 
- <script>
+{% endblock %}
 
- function removeByValue(arr, val) {  // 在数组arr里删除元素val
-     for(var i=0; i<arr.length; i++) {
-         if(arr[i] == val) {arr.splice(i, 1);
-         break;
-         }
-      }             
-    } 
-
- // 点击新增按钮，弹起模态框
- $('#vpadd').click(function(){  
-    $('#dbtitlediv').css("background","#836FFF")
-    $('#dbtitle').html('数据库配置 / 新增')
-    //$('#vpaddsave').text('创建')
-    $('#vpaddcreate').show()
-    $('#vpaddsave').hide()
-    $('#virtualpropertymodal').modal({show:true, backdrop:'static'})  // 弹起模态框
-     $('#vpaddcreate').removeAttr("disabled")
-     // $('.form-horizontal')[0].reset();
-     $('#name').attr('value','')
-     $('#name').css({'border-color':'', 'background':''})
- })
-
- // 点击 模态框的 创建按钮
- $('#vpaddcreate').click(function(){
-	var selectenv = $.trim($('#selectenv').val())
-	var name = $.trim($('#name').val())
-	var host = $.trim($('#host').val())
-	var port = $.trim($('#port').val())
-	var user = $.trim($('#user').val())
-	var password = $.trim($('#password').val())
-	var note = $.trim($('#note').val())
-
-        if (selectenv == '生产'){
-            var env = 1
-        }
-        else if (selectenv == '测试'){
-            var env = 2
-        }
-        if (name == ''){
-            $('#name').css({'border-color': 'red', 'background-color': '#FFD2D2'})
-        }
-
-        if (host == ''){
-            $('#host').css({'border-color': 'red', 'background-color': '#FFD2D2'})
-        }
-
-        if (port == ''){
-            $('#port').css({'border-color': 'red', 'background-color': '#FFD2D2'})
-        }
-
-        if (user == ''){
-            $('#user').css({'border-color': 'red', 'background-color': '#FFD2D2'})
-        }
-
-        if (password == ''){
-            $('#password').css({'border-color': 'red', 'background-color': '#FFD2D2'})
-        }
-
-        if (name == '' || host == '' || port == '' || user == '' || password == '' ){
-            return false
-        }
-        $.ajax({
-             type: "post",
-             url: "{% url 'dbconfig' %}",
-             data: {env:env, name:name, host:host, port:port, user:user, password:password, note:note},
-             dataType: "json",
-             success: function(data){
-              //业务逻辑    
-                console.log(data)
-		        var status = data.status
-                if (status == -1){
-                    $('#name').css({'border-color': 'red', 'background-color': '#FFD2D2'})
-                    $('#name').attr('value', name + '（提示：该名称已存在）')
-                    $('#vpaddcreate').attr({'disabled':'disabled'})
-                }
-                else if (status == 0){
-                    $('#virtualpropertymodal').hide()  // 收起"添加"模态框
-                    $('#infomodal').modal({show:true, backdrop:'static'})  // 弹起"提示"模态框
-                    $('#inforz').html('<span style="font-weight:bold; color:blue; margin-right:10px">'+name+'</span>'+'<span> 添加成功！</span>')
-                    $('#infoclose').click(function(){  // 点击关闭按钮，刷新当前页
-                        location.reload()
-                    })
-                }
-             },
-             error: function(){
-             //显示错误信息
-             },
-        })
-})
-
-// 点击 删除按钮（类deletevp）
- $('.deletevp').click(function () {
-     // 获取id和 name（name用于展示）
-    var id = $(this).attr('ckid')
-	var name = $(this).attr('ckname')
-    // 弹起确认删除的模态框
-    $('#deleteModal').modal({show:true, backdrop:'static'})
-	$('#deleteModalbody').html('<span>确认删除</span>'+'<span style="font-weight:bold;color:blue; margin-right:10px; margin-left:10px">'+name+'</span>'+ '<span>吗？</span>')
-    // 点击模态框的确定按钮，请求后端删除
-     $('#savedeletebtn').unbind('click').bind('click',function(){
-        $('#deleteModal').modal('hide')
-        $.ajax({
-            type: "delete",
-            url: '{% url "dbconfig" %}' + id,
-            data: {},
-            dataType: "json",
-            success: function(result){
-            if ( result.status == 0 ){
-                $('#deleteModal').modal('hide')
-                $('#infomodal').modal({show:true, backdrop:'static'})  // 弹起提示的模态框
-                $('#inforz').html('<span style="font-weight:bold; color:blue; margin-right:10px">' + name + '</span>' + '<span>删除成功！</span>')
-                $('#infoclose').click(function(){
-                        location.reload()
-                    })
-                }
-            },
-            error: function(){
-                console.log('404..')
-            },
-        })
-
-  })
-})
-
-// 点击 修改按钮
- $('.mdyvptype').click(function () {
-    $('#vpaddcreate').hide()
-    $('#vpaddsave').show()
-     // 获取这行的所有数据
-    var id = $(this).attr('ckid')
-    var password = $(this).attr('dbpass')
-    var name = $(this).parents("tr").children("td").eq(0).text()
-    var host = $(this).parents("tr").children("td").eq(1).text()
-    var port = $(this).parents("tr").children("td").eq(2).text()
-    var user = $(this).parents("tr").children("td").eq(3).text()
-    var selectenv = $(this).parents("tr").children("td").eq(4).text()
-    var note = $(this).parents("tr").children("td").eq(5).text()
-    // 修改模态框的背景色，标题；弹起模态框
-    $('#dbtitlediv').css("background","#FF8C00")
-    $('#dbtitle').html('数据库配置 / 修改')
-    $('#virtualpropertymodal').modal({show:true, backdrop:'static'})  // 弹起提示的模态框
-    // 把获取的值写入模态框的输入框
-    $('#name').attr("value", name)
-    $('#host').attr("value", host)
-    $('#port').attr("value", port)
-    $('#user').attr("value", user)
-    $('#password').attr("value", password)
-    $('#note').attr("value", note)
-    // select下拉框 显示数据库保存的环境 
-	selectarr = ['生产','测试']
-    $('#selectenv').empty()
-    $('#selectenv').append('<option>' + selectenv + '</option>')
-	removeByValue(selectarr, $('#selectenv').val())  // 从数组中删除元素
-     for (i=0; i<selectarr.length;i++) {
-        $('#selectenv').append('<option>' + selectarr[i] + '</option>')
-     }
-    // 点击模态框保存按钮
-    $("#vpaddsave").unbind('click').bind('click',function(){
-        // 获取各输入框的值
-        var name = $('#name').val()
-        var host = $('#host').val()
-        var port = $('#port').val()
-        var user = $('#user').val()
-        var password = $('#password').val()
-        var note = $('#note').val()
-        var selectenv = $('#selectenv').val()
-        if (selectenv == '生产'){
-            var env = 1
-        }
-        else if (selectenv == '测试'){
-            var env = 2
-        }
-        $.ajax({
-            type: "put",
-            url: '{% url "dbconfig" %}' + id,
-            data: {name:name, host:host, port:port, user:user, password:password, env:env, note:note},
-            dataType: "json",
-            success: function(result){
-                console.log(result)
-                status = result.status
-                if ( status == 0 ){
-                    $('#virtualpropertymodal').hide()  // 收起"添加"模态框
-                    $('#infomodal').modal({show:true, backdrop:'static'})  // 弹起"提示"模态框
-                    $('#inforz').html('<span style="font-weight:bold; color:blue; margin-right:10px">'+name+'</span>'+'<span> 修改成功！</span>')
-                    $('#infoclose').click(function(){
-                        location.reload()
-                    })
-                }
-
-            },
-            error: function(){
-                console.log('404..')
-            },
-        })
-  })
-})
-
-// 点击“必填”的input 输入的内容需要在数据库里唯一，启用按钮，清空输入框，清空样式
-$('.needinputsingle').click(function(){
-    $('#vpaddsave').removeAttr("disabled")  // “添加”按钮启用
-    $(this).attr('value','')
-    $(this).css({'border-color': '', 'background-color': ''})  // css复原
-})
-
-    $("#seabtn").click(function(){
-        var souword = $("#souinput").val()
-        url = "?souword="+souword
-        $("#tiaozhuansearch").attr("href",url)
-    }) 
-  
- </script>
+{% block js %}
 
 {% endblock %}
 
