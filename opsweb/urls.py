@@ -29,4 +29,6 @@ urlpatterns = [
     url('^cmdb/', include('cmdb.urls', namespace='cmdb')),
     url('^task/', include('tasks.urls', namespace='task')),
     url('^books/', include('books.urls', namespace='books')),
+    url('^projects/', include('projects.urls', namespace='projects')),
+    url('^deploy/', include('code_release.urls', namespace='deploy')),
 ]

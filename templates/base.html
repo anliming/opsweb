@@ -183,7 +183,6 @@
         </li>
 
 
-
         <li class="treeview">
           <a href="#">
             <i class="fa fa-code"></i>
@@ -193,13 +192,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i>我的项目</a></li>
+            <li><a href="{% url 'projects:project_list' %}"><i class="fa fa-circle-o"></i>我的项目</a></li>
           </ul>
         </li>
-
-
-
-
 
         <li class="treeview">
           <a href="#">
@@ -210,11 +205,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> 申请上线</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> 产品线管理</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> 产品线管理</a></li>
+            <li><a href="{% url 'deploy:apply' %}"><i class="fa fa-circle-o"></i> 申请上线</a></li>
+            <li><a href="{% url 'deploy:apply_list' %}"><i class="fa fa-circle-o"></i> 申请列表 </a></li>
+            <li><a href="{% url 'deploy:deploy_history' %}"><i class="fa fa-circle-o"></i> 发布历史</a></li>
           </ul>
         </li>
+
+
           
         <li class="treeview">
           <a href="#">

@@ -16,6 +16,7 @@ from books.forms import  UserForm,UserUpdataForm
 from django.contrib.auth.hashers import make_password
 import json
 from random import Random
+from utils.gitlab_utils import gl
 #from SendEmail import send_register_email
 
 import logging
@@ -42,7 +43,12 @@ class UserListView(LoginRequiredMixin,PaginationMixin,ListView):
         return context
     def delete(self,request,*args,**kwargs):
         try:
-            user = self.model.objects.get(pk=QueryDict((request.body))["id"]).delete()
+            user = self.model.objects.get(pk=QueryDict((request.body)))
+            #user = self.model.objects.get(pk=QueryDict((request.body))["id"]).delete()
+            username = user[0].username
+            user_id = gl.users.search(username)[0].id
+            gl.users.delete(user_id)
+            user.delete()
             ret = {"code": 0, "result": "删除用户成功", "next_url": self.next_url}
         except Exception as e:
             ret = {"code": 1, "errmsg": "删除用户失败,%s" , "next_url": self.next_url}
@@ -68,6 +74,7 @@ class UserListView(LoginRequiredMixin,PaginationMixin,ListView):
                 #send_mail("平台通知","欢迎加入OPS平台。\r以下是你的账号信息:\r用户名:"+uname+"\r密码: "+user_pass +"\r平台地址: %s http://ops.yktour.com.cn:8000/\r", "drachen@126.com",[uemail,])
                 #send_register_email(email_title="平台通知", email_body="欢迎加入OPS平台。\r以下是你的账号信息:\r用户名: %s\r密码: %s\r平台地址: %s http://ops.yktour.com.cn:8000/\r"%(uname,user_pass), email_to=user.email)
                 user.save()
+                gl.users.create({"username":uname,"password":user_pass,"email":uemail,"name":uname_cn})
                 ret = {"code": 0, "result": "添加用户成功", "next_url": self.next_url}
             except Exception as e:
                 ret = {"code": 2, "errmsg": "添加失败", "next_url": self.next_url}

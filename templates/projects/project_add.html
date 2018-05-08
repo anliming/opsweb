@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}添加项目{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">添加项目</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">添加项目</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+        <form method="post" action="{% url 'projects:project_add' %}" class="form-horizontal">
+                     {% if msg %}
+                        <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {{ msg | safe }}
+                         </div>
+                     {% endif %}
+
+
+                    <div class="form-group"><label class="col-sm-2 control-label">项目路径：</label>
+                        <div class="col-sm-3"><input type="text" value="http://gitlab.1233.com/" name="url" class="form-control" disabled></div>
+                        <div class="col-sm-2">
+                            <select  name="group" class="group-select form-control" required="">
+                                {% for group in all_group %}
+                                    <option value="{{ group.name }}" >{{ group.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-3"><input type="text" name="name" class="form-control" required=""></div>
+                    </div>
+
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">项目描述：</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name ="description" rows="3" placeholder="说明格式"></textarea>
+                        </div>
+                    </div>
+ <div class="hr-line-dashed"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">可见等级：</label>
+                        <div class="col-sm-8">
+                            <div class="radio i-checks">
+                                <label><input type="radio" value="0" name="visibility_level" checked><i class="fa fa-lock fa-fw"></i> <strong>私有</strong> <small>项目必须明确授权给每个用户访问。</small></label>
+                            </div>
+                            <div class="radio i-checks">
+                                <label><input type="radio" value="10" name="visibility_level"><i class="fa fa-shield fa-fw"></i> <strong>内部</strong> <small>项目可以被所有已登录用户克隆。</small></label>
+                            </div>
+                             <div class="radio i-checks">
+                                <label><input type="radio" value="20" name="visibility_level"><i class="fa fa-globe fa-fw"></i> <strong>公开</strong> <small>>项目可以被任何用户克隆。</small></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button id="submit_button" class="btn btn-primary" type="submit">添加项目</button>
+                            <button class="btn btn-white" type="reset">取消</button>
+                        </div>
+                    </div>
+                </form>
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+

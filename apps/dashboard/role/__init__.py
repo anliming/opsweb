@@ -12,7 +12,7 @@ from django.conf import settings
 from django.contrib.auth.models import Permission,Group
 from dashboard.models import UserProfile
 from books.forms import  GroupForm,GroupUpdateForm
-
+from utils.gitlab_utils import gl
 
 class GroupListView(LoginRequiredMixin,PaginationMixin,ListView):
     template_name = "dashboard/group_list.html"
@@ -27,6 +27,9 @@ class GroupListView(LoginRequiredMixin,PaginationMixin,ListView):
             if form.is_valid():
                 form.save()
                 ret = {"code":0,"result":"添加角色成功"}
+                gname = request.POST.get("name")
+                print(gname)
+                gl.groups.create({'name': gname, 'path': gname})
             else:
                 ret = {"code": 1, "errmsg": form.errors}
         except Exception as e:
@@ -40,6 +43,9 @@ class GroupListView(LoginRequiredMixin,PaginationMixin,ListView):
             if group.user_set.all() or group.permissions.all():
                 ret = {"code": 1, "errmsg": "角色有成员或有权限在内"}
             else:
+                groupname = group[0].name
+                group_id = gl.groups.search(groupname)[0].id
+                gl.groups.delete(group_id)
                 group.delete()
                 ret = {"code":0,"result":"删除角色成功"}
         except Exception as e:
@@ -74,7 +80,6 @@ class GroupDetailView(LoginRequiredMixin,DetailView):
         except Exception as e:
             ret = {"code": 1, "errmsg": e.msg, "next_url": self.next_url}
         return render(request,settings.JUMP_PAGE,ret)
-
 
 class GroupUsersView(LoginRequiredMixin,View):
         def get(self,*args,**kwargs):

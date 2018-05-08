@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'djcelery',
     'cmdb',
     'tasks',
+    'projects',
+    'code_release',
 ]
 
 AUTH_USER_MODEL = 'dashboard.UserProfile'
@@ -244,3 +246,11 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'     # Backend数�
 
 CELERYD_LOG_FILE = BASE_DIR + "/logs/celery/celery.log"         # log路径
 CELERYBEAT_LOG_FILE = BASE_DIR + "/logs/celery/beat.log"     # beat log路径
+
+
+#GITLAB_HTTP_URI = "http://211.152.57.213/"
+#GITLAB_TOKEN = "xAhXAq4LGs7x61DSBjxx"
+GITLAB_HTTP_URI = "http://gitlab.1233.com/"
+GITLAB_TOKEN = "1UMs1RNRRyhrrwzwUvS5"
+
+

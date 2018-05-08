@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block css %}
+    <style>
+    .vote-title {
+        margin-left: 1px;
+        margin-top: 12px;
+    }
+    .vote-item{
+        padding: 4px 15px;
+    }
+    .vote-icon {
+        font-size:15px;
+        margin-top:18px;
+        color:#000;
+    }
+    </style>
+{% endblock %}
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">项目列表</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">项目列表</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+
+    <div class="box-body">
+
+
+     <div class="">
+            <a href="{% url 'projects:project_add' %}" class="btn btn-sm btn-primary"> 添加项目 </a>
+            <a target="_blank" href="http://gitlab.1233.com/" class="btn btn-sm btn-success pull-right">去GitLab</a>
+        </div>
+
+         {% for project in page_obj.object_list %}
+           <div class="vote-item">
+            <div class="row">
+                <div class="col-md-10">
+                    <a href="{{ project.http_url_to_repo }}" class="vote-title">
+                        {{ project.namespace.name }} /  {{ project.name }}
+                    </a><br>
+                        {{ project.description }}
+                </div>
+                <div class="col-md-2">
+                    <div class="vote-icon">
+                        <i class="fa fa-star" ></i><span style="padding:0 3px;">{{ project.star_count }}</span>
+                        {% if project.visibility_level == 0 %}
+                            <i class="fa fa-lock fa-fw" > </i>
+                        {% elif project.visibility_level == 10 %}
+                            <i class="fa fa-shield fa-fw" > </i>
+                        {% else %}
+                             <i class="fa fa-globe fa-fw" > </i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-6">
+         <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+             显示 [{{ page_obj.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+         </div>
+      </div>
+
+      {% include 'paginator.html' %}
+    </div><!-- /.paginator -->
+
+</div>
+<!-- /.box-body -->
+
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+{% endblock %}
+
+

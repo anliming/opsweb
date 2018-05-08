@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}发布系统{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">发布进度</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">发布进度</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+    {% if msg %}
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ msg | safe }}
+            </div>
+        {% elif errmsg %}
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ errmsg | safe }}
+            </div>
+    {% endif %}
+
+     <div class="ibox-title">
+        <ul class="nav nav-pills nav-justified step step-arrow">
+            <li class="active">
+                <a>申请中</a>
+            </li>
+            <li class="{% if deploy.status >= 1 %}active{% endif %}">
+                <a>仿真</a>
+            </li>
+            <li class="{% if deploy.status >= 2%}active{% endif %}">
+                <a>上线完成</a>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <br>
+
+
+    <form method="post" action="" class="form-horizontal">
+
+        <div class="form-group"><label class="col-sm-2 control-label">项目名称：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" readonly="readonly" name="name" value="{{ deploy.name }}" placeholder="项目名称">
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">发布版本：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" readonly="readonly" name ="project_version" value="{{ deploy.project_version }}" placeholder="发布版本" />
+
+          </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">版本描述：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" readonly="readonly" name ="version_desc" value="{{ deploy.version_desc }}" placeholder="版本描述" />
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">上线人：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" readonly="readonly" name ="assigned_to" value="{{ deploy.assigned_to.name_cn }}" placeholder="版本描述" />
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">更新详情：</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" readonly="readonly" name ="update_detail" rows="3" placeholder="更新详情">{{ deploy.update_detail }}</textarea>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+            {% if request.user.id == deploy.assigned_to_id %}
+                {% if deploy.status == 0 %}
+                    <button  class="btn btn-primary" type="submit">仿真</button>
+                {% elif deploy.status == 1 %}
+                    <button  class="btn btn-primary" type="submit">上线</button>
+                {% elif deploy.status == 2 %}
+                    <button class="btn btn-primary" type="submit">完成</button>
+                {% endif %}
+            {% elif request.user.id == deploy.applicant_id %}
+                <button class="btn btn-primary" type="button">催一下</button>
+            {% else %}
+
+            {% endif %}
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+
+
+{% endblock %}
