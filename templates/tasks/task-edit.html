@@ -81,7 +81,9 @@ editor.setReadOnly(false);
 //自动换行,设置为off关闭
 editor.setOption("wrap", "free");
 
-var playbook_contents = '{{ playbook_text }}'.slice(6, -6);
+<!--var playbook_contents = '{{ playbook_text }}'.slice(6, -6);-->
+var playbook_contents = '{{ playbook_text }}'.slice(6, -6).replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+<!--var playbook_contents = playbook_contents-->
 editor.setValue(playbook_contents);
 
 

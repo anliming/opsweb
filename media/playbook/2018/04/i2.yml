@@ -1,7 +1,0 @@
----
-- hosts: all
-  become_user: root
-  gather_facts: false
-  tasks:
-  - name: "test echo ehco echo "
-    shell: echo "hello,world!" >>/tmp/p.txt

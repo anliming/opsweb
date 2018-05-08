@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5183de7293c78238524527d0a26fb25f8c2faf14
 logs/*.log
 logs/celery/*.log
 opsweb/settings.py

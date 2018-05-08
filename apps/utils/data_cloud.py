@@ -9,7 +9,7 @@ def get_hosts_from_aliyun():
     从阿里云获取ECS实例并入库
     :return:
     """
-    ecs = ECSHandler('LTAI2bp5xMMGLjxt','1Ias4RC3kaAeJgLB85vjzjXYdv2axB','cn-zhangjiakou')
+    ecs = ECSHandler('Lxx','1Iasdasd','ccc')
     page = 1
     while True:
         instances, exception, next_page = ecs.get_instances(page)

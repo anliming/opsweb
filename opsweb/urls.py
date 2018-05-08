@@ -29,6 +29,10 @@ urlpatterns = [
     url('^cmdb/', include('cmdb.urls', namespace='cmdb')),
     url('^task/', include('tasks.urls', namespace='task')),
     url('^books/', include('books.urls', namespace='books')),
+<<<<<<< HEAD
     url('^projects/', include('projects.urls', namespace='projects')),
     url('^deploy/', include('code_release.urls', namespace='deploy')),
+=======
+    url('^sqlmng/', include('sqlmng.urls', namespace='sqlmng')),
+>>>>>>> 5183de7293c78238524527d0a26fb25f8c2faf14
 ]
