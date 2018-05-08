@@ -69,7 +69,7 @@
             <tr class="gradeX">
                 <td class="text-center">{{ task.name }}</td>
                 <td class="text-center"> {{ task.playbook }} </td>
-                <td id="status_{{ task.id }}" class="text-center"><span class="label {% ifequal task.status 'Y' %}label-success{% else %}label-danger{% endifequal %}">{{ task.get_status_display }}</span> </td>
+                <td id="status_{{ task.id }}" class="text-center"><span id="span" class="label {% ifequal task.status 'Y' %}label-success{% else %}label-danger{% endifequal %}">{{ task.get_status_display }}</span> </td>
                 <td  id="exec_result_{{ task.id }}" class="text-center">
                     <table class="table">
                         <thead>
@@ -155,8 +155,9 @@ $('.btn-execute').click(function () {
                     console.log(result_val);
                 });
                  document.getElementById('exec_result_'+ String(task_id)).innerText = result_val;
-                 document.getElementById('status_'+ String(task_id)).innerText = '已执行';
-                 document.getElementById('status_'+ String(task_id)).setAttribute('class', 'label label-success');
+
+                 document.getElementById('span').innerText = '已执行';
+                 document.getElementById('span').setAttribute('class', 'label label-success');
             }
 
         }

@@ -1,0 +1,167 @@
+
+<script type="text/javascript" src="/static/js/hDate.js"></script>
+<link rel="stylesheet" href="/static/css/hDate.css" />
+
+<style>
+.modal-title {font-size:18px; margin-right:5%}
+.modalbtn {margin-right:25%}
+.mheadspan {font-size:16px; font-weight:bold; color:blue}
+.navbtn {margin-left:0.5%; margin-right:0.5%}
+.exportexl {margin-left:3%}
+.cancelbtn {float:left; margin-left:10%}
+.surebtn {float:right; margin-right:10%}
+</style>
+
+<div class="modal fade" id='infomodal'>
+  <div class="modal-dialog" style="width:40%">
+    <div class="modal-content">
+    	<div class="modal-header" style="background:#0080FF; color:white">
+			<i class="fa fa-info-circle"></i>
+            <span id="infotitle" style="font-weight:bold">服务器提示</span>
+        </div>
+      <div id="inforz" class="text" style="overflow-y:scroll; text-align:center; max-height:400px; margin-top:10px; margin-left:10px; margin-bottom:10px">
+      </div>
+    <div class="modal-footer" style="display: table; width: auto;margin-left: auto; margin-right: auto;">
+        <button id="infoclose" type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id='sqlmodal'>
+  <div class="modal-dialog" style="width:80%">
+    <div class="modal-content">
+    	<div class="modal-header" style="background:#0080FF; color:white">
+			<i class="fa fa-info-circle"></i>
+            <span id="sqltitle" style="font-weight:bold">服务器提示</span>
+        </div>
+      <div id="sqlrz" class="text" style="overflow-y:scroll; max-height:400px; margin-top:10px; margin-left:10px; margin-bottom:10px">
+
+      </div>
+    <div class="modal-footer" style="display: table; width: auto;margin-left: auto; margin-right: auto;">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id='deleteModal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-header" style="background:#FF5151; color:white">
+			<i class="fa fa-info-circle"></i>
+            <span style="font-weight:bold">删除</span>
+	  		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      <div id="deleteModalbody" class="modal-body" style="text-align:center">
+        <p>确认删除选择的数据吗？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn cancelbtn" data-dismiss="modal">取消</button>
+        <button type="button" id='savedeletebtn' class="btn btn-primary surebtn">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 添加 数据库-->
+<div class="modal fade" id='virtualpropertymodal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div id='dbtitlediv' class="modal-header" style="background:#836FFF; color:white">
+			<i class="fa fa-info-circle"></i>
+            <span id="dbtitle" style="font-weight:bold"> </span>
+	  		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div>
+          <form class="form-horizontal" onsubmit="return false;">
+	      <!-- 添加 -->
+              <div id="vpresourcemodal" class="box-body">
+
+		        <div class="form-group">
+		            <label for="selectenv" class="col-sm-3 control-label"><span style="color:red; margin-right:10px">*</span>选择环境</label>
+		            <div class="col-sm-8">
+		                <select class='form-control needinput' id='selectenv'>
+                            <option>生产</option>
+                            <option>测试</option>
+                        </select>
+		            </div>
+		        </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-3 control-label"><span style="color:red; margin-right:10px">*</span>数据库名</label>
+                  <div class="col-sm-8">
+                      <input id="name" type="text" class="form-control needinputsingle" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="host" class="col-sm-3 control-label"><span style="color:red; margin-right:10px">*</span>数据库地址</label>
+                  <div class="col-sm-8">
+                      <input id="host" type="text" class="form-control needinputsingle" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="port" class="col-sm-3 control-label"><span style="color:red; margin-right:10px">*</span>端口</label>
+                  <div class="col-sm-8">
+                      <input id="port" type="text" class="form-control needinputsingle" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="user" class="col-sm-3 control-label"><span style="color:red; margin-right:10px">*</span>用户名</label>
+                  <div class="col-sm-8">
+                      <input id="user" type="text" class="form-control needinputsingle" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label"><span style="color:red; margin-right:10px">*</span>密码</label>
+                  <div class="col-sm-8">
+                      <input id="password" type="password" class="form-control needinputsingle" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="note" class="col-sm-3 control-label">备注</label>
+                  <div class="col-sm-8">
+                      <input id="note" type="text" class="form-control" placeholder=""/>
+                  </div>
+                </div>
+
+              </div>
+	      <!-- -->
+          </form>
+         </div>
+
+      <div class="modal-footer">
+        <button type="button" id="vpaddcancel" class="btn btn-default modalbtn cancelbtn" data-dismiss="modal">取消</button>
+        <button type="button" id='vpaddcreate' style="display:none" class="btn btn-primary modalbtn surebtn" ckvalue="vptype">创建</button>
+        <button type="button" id='vpaddsave' class="btn btn-primary modalbtn surebtn" ckvalue="vptype">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id='action'>
+  <!-- 在"modal-dialog"设置模态框的宽和高 -->
+  <div class="modal-dialog" style="height:50%; width:40%">
+    <div class="modal-content">
+      <div class="modal-header">
+          <i class="fa fa-info-circle"></i>
+          <span id="infotitle" style="font-weight:bold">SQL操作</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id='actioncontent' class="modal-body" style="text-align:center;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='actionsave' class="btn btn-primary">确定</button>
+        <button type="button" id='actioncancel' class="btn" data-dismiss="modal" style="margin-left:20%; margin-right:20%">取消</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

@@ -1,0 +1,113 @@
+
+{% extends "base.html" %}
+
+{% block title %}SQL上线系统{% endblock %}
+
+{% block breadcrunb %}
+      <h1>
+         Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+{% endblock %}
+{% block content %}
+{% include 'sqlmng/modal.html' %}
+<div class="breadcrumbs" id="breadcrumbs">        
+
+    <ul class="breadcrumb">
+        <li>
+        <i class="icon-home home-icon"></i>
+        <a href="#">Home</a>
+        </li>
+
+        <li>
+        <a href="#">运维工具</a>
+        </li>
+
+        <li>
+        <a href="#">SQL上线审核系统</a>
+        </li>
+
+        <li class="active">SQL上线审核</li>
+    </ul><!-- .breadcrumb -->
+
+</div>
+
+<div class="page-content">
+
+<div class="row">
+    <div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">请输入需要上线的SQL语句</div>
+		<div class="panel-body">
+			<div class="col-sm-7">
+				<textarea id="sqltext" style="margin-bottom:20px" placeholder="SQL语句" class="col-xs-10 col-sm-12" rows="12"></textarea>
+				<input id="sqlnote" type="text" class="form-control" placeholder="备注" />
+			</div>
+			<div class="col-sm-5">
+				<div>
+                    <div class="col-sm-2">
+					    <span style="font-size:16px; color:#4682B4; font-weight:bold "> 环境 </span>
+                    </div>
+                    <div class="col-sm-7">
+					    <label style="margin-right:20%">
+						    <input value="2" name="form-field-radio" type="radio" class="ace" />
+						    <span class="lbl"> 测试</span>
+					    </label>
+					    <label>
+						    <input value="1" name="form-field-radio" type="radio" class="ace" />
+					    	<span class="lbl"> 生产</span>
+				    	</label>
+                    </div>
+				</div>
+	            </br>
+	            </br>
+				<div>
+                    <div class="col-sm-2"> <span style="font-size:16px; color:#4682B4; font-weight:bold" >数据库</span> </div>
+					<div class="col-sm-7">
+						<select id='targetdb' class="form-control" >
+						</select>
+					</div>
+				</div>
+                </br>
+                </br>
+                </br>
+				<div>
+                    <div class="col-sm-2"> <span style="font-size:16px; color:#4682B4; font-weight:bold" >执行人 </span></div>
+                    <div class="col-sm-7">
+					    <select id='treater' class="form-control">
+					    </select>
+                    </div>
+				</div>
+			</div>
+		</div>
+
+    <div class="clearfix form-actions">
+      <div class="col-md-offset-0 col-md-12" style="margin-left:15%">
+        <button id='sqlinputbtn' style="margin-top:20px" class="btn btn-info" type="submit">
+            <i class="icon-ok bigger-110"></i>
+            提交
+        </button>
+        <button style="margin-top:20px; margin-left:15%" class="btn reset">
+            <i class="icon-undo bigger-110"></i>
+            清空
+        </button>
+      </div>
+    </div>
+
+<!--  </form> -->
+</br></br>
+
+	        </div>
+	    </div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}
+

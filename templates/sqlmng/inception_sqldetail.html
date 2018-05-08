@@ -1,0 +1,172 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'sqlmng/modal.html' %}
+
+<link rel="stylesheet" href="/static/css/page.css" />
+
+<style>
+.font17 {font-size:15px;font-weight:bold;width:100px;background:#4682B4}
+.font17contentleft {width:25%;}
+.host_detail_tag {font-size:14px;font-weight:bold;color:#4682B4}
+</style>
+
+ <div class="breadcrumbs urltag" ckvalue="detail" sqlid="{{sql.id}}">
+    <ul class="breadcrumb">
+        <li>
+	<i class="icon-home home-icon"></i>
+        <a href="#">Home</a>
+        </li>
+
+        <li>
+        <a href="#">运维工具</a>
+        </li>
+
+        <li>
+        <a href="#">SQL上线审核系统</a>
+        </li>
+
+	<li>
+        <a href='#'>SQL上线列表</a>
+	</li>
+
+        <li class="active">SQL详情页</li>
+
+    </ul>
+ </div>
+
+  <div class="page-content" style="margin-left:16px">
+	  </br>
+	  <span class="host_detail_tag">SQL基本信息</span>
+          <div class="dataTables_scrollBod" style="width:80%">
+              <table class="table table-bordered dataTable no-footer table-condensed ">
+                  <thead></thead>
+                  <tbody>
+                  <tr>
+                      <td class="font17">提交时间</td>
+                      <td class="font17contentleft">{{sql.committime}}</td>
+                      <td class="font17">提交人</td>
+                      <td>{{sql.commiter}}</td>
+                  </tr>
+                  <tr>
+                      <td class="font17">环境</td>
+                      {% if sql.env == 2 %}
+                          <td class="font17contentleft"><small class="label bg-green">测试</small></td>
+                      {% elif sql.env == 1 %}
+                          <td class="font17contentleft"><small class="label bg-blue">生产</small></td>
+                      {% endif %}
+                      <td class="font17">执行人</td>
+                      <td>{{sql.treater}}</td>
+                  </tr>
+                  <tr>
+                      <td class="font17">数据库</td>
+                      <td class="font17contentleft">{{sql.dbname}}</td>
+                      <td class="font17">状态</td>
+                      {% if sql.status == -3 %}
+                          <td> <img src="/static/imgs/images/sqlmanage/rollback.gif"> 已回滚</td>
+                      {% elif sql.status == -2 %}
+                          <td> <img src="/static/imgs/images/sqlmanage/pause.gif"> 已暂停</td>
+                      {% elif sql.status == -1 %}
+                          <td> <img src="/static/imgs/images/sqlmanage/forexcute.png"> 待执行</td>
+                      {% elif sql.status == 0 %}
+                          <td> <img src="/static/imgs/images/sqlmanage/excuted.png"> 已执行</td>
+                      {% elif sql.status == 1 %}
+                          <td> <img src="/static/imgs/images/sqlmanage/canceled.png"> 已放弃</td>
+                      {% elif sql.status == 2 %}
+                          <td> <img src="/static/imgs/images/sqlmanage/excutefail.png"> <span> 执行失败</span> <button class="btn btn-block btn-primary btn-sm sqltailbtn" style="float:right;" ckvalue="{{sql.executerz}}">详情</button> </td>
+                      {% endif %}
+                  </tr>
+                  <tr>
+                      <td class="font17">语法检查</td>
+                      <td class="font17contentleft"> <img src="/static/imgs/images/sqlmanage/reviewok.png" width="22px" height="22px"> 通过 </td>
+                      <td class="font17">备注</td>
+                      <td>{{sql.note}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
+      </br>
+      <span class="host_detail_tag">SQL语句</span>
+      <div style="max-height:280px; overflow:auto">
+          {{sql.sqlcontent}}
+      </div>
+      </br>
+      <div>
+          <span class="host_detail_tag" style="margin-right:2%">操作</span>
+          <!-- 操作按钮 -->
+
+          {% if sql.status == -1 %}
+              {% if request.user.is_superuser or role == 1 or role == 2 %}
+                  <td>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-xs btn-primary btn-flat sqlaction" actiontype="execute" ckid="{{sql.id}}" style="font-weight:bold" >执行</button>
+                          <button type="button" data-toggle="dropdown" class="btn btn-xs btn-primary btn-flat dropdown-toggle">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                              <li>
+                                  <a href="#" class="sqlaction" actiontype="reject" style="margin-left:2%; font-weight:bold" ckid="{{sql.id}}">放弃</a>
+                              </li>
+                              {% if request.user.is_superuser %}    <!-- dba专有的：暂停  -->
+                                  <li>
+                                      <a href="#" class="sqlaction" actiontype="pause" style="margin-left:2%; font-weight:bold" ckid="{{sql.id}}">暂停</a>
+                                  </li>
+                              {% endif %}
+                          </ul>
+                      </div>
+                  </td>
+              {% endif %}
+          {% elif sql.status == 0 %}
+              {% if role == 1 or role == 2 %}
+                  <td>
+                      <button type="button" class="btn btn-xs btn-warning sqlaction" data-toggle="button" actiontype="rollback" style="font-weight:bold" ckid="{{sql.id}}">回滚</button>
+                  </td>
+              {% elif request.user.is_superuser %}
+                  <td>
+                      <button type="button" class="btn btn-xs btn-warning sqlaction" data-toggle="button" actiontype="rollback" style="font-weight:bold" ckid="{{sql.id}}">回滚</button>
+                  </td>
+              {% endif %}
+          {% elif sql.status == -2 and request.user.is_superuser %}
+              <td>
+                  <button class="btn btn-sm btn-yellow sqlaction" style="font-weight:bold" actiontype="cancelpause" ckid="{{sql.id}}">取消暂停</button>
+              </td>
+              <!-- sql.env == 2  -->
+          {% elif sql.status == -1 and sql.env == 2 %}
+              <td>
+                  <div class="btn-group">
+                      <button class="btn btn-xs btn-primary btn-flat sqlaction" actiontype="execute" ckid="{{sql.id}}" style="font-weight:bold">执行</button>
+                      <button type="button" data-toggle="dropdown" class="btn btn-xs btn-primary btn-flat dropdown-toggle">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                          <li>
+                              <a href="#" class="sqlaction" actiontype="reject" style="margin-left:2%; font-weight:bold" ckid="{{sql.id}}">放弃</a>
+                          </li>
+                          {% if request.user.is_superuser %}    <!-- dba专有的：暂停  -->
+                              <li>
+                                  <a href="#" class="sqlaction" actiontype="pause" style="margin-left:2%; font-weight:bold" ckid="{{sql.id}}">暂停</a>
+                              </li>
+                          {% endif %}
+                      </ul>
+                  </div>
+              </td>
+          {% elif sql.status == 0 and sql.env == 2 %}
+              <td> <button type="button" class="btn btn-xs btn-warning sqlaction" data-toggle="button" actiontype="rollback" style="font-weight:bold" ckid="{{sql.id}}">回滚</button> </td>
+          {% elif sql.status == -2 and sql.env == 2 and request.user.is_superuser %}
+              <td>
+                  <button class="btn btn-sm btn-yellow sqlaction" style="font-weight:bold" actiontype="cancelpause" ckid="{{sql.id}}">取消暂停</button>
+              </td>
+          {% else %}
+              <td> </td>
+          {% endif %}
+
+      </div>
+  </div>
+
+<script src="/static/js/incept.js"></script>
+	
+{% endblock %}
+
