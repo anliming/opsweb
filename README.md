@@ -19,5 +19,13 @@
   - 数据大盘 
   - SQL审核上线
 
-### 开始使用 
+### 开始使用
+#### 前期准备
+  - Mysql
+  - Redis
+  - Celery
+  - Gitlab
+  - Jenkins
+  - Ansible
+  - Aliyun/QCloud SDK
 #### 备份一下省的丢失，后续继续完善。
