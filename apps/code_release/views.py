@@ -31,7 +31,6 @@ class GetProjectVersionsView(LoginRequiredMixin, View):
         print project_id
         tags = gl.project_tags.list(project_id=int(project_id))
         tags = [[tag.name, tag.message] for tag in tags]
-        print(tags)
         return HttpResponse(json.dumps(tags), content_type='application/json')
 
 
@@ -142,7 +141,7 @@ class DeployView(LoginRequiredMixin, DetailView):
                 if deploy.status == 0:
                     deploy.status = 1
                     # 通过Jenkins api 操作将制定项目的代码推送到规定的服务器上去
-                    msg = "仿真发布完成"
+                    msg = "灰度发布完成"
                 # 如果状态为1 ，说明已经是仿真状态，点击上线按钮，讲代码推到正式环境，同时状态改为2
                 elif deploy.status == 1:
                     deploy.status = 2

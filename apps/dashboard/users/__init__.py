@@ -43,15 +43,15 @@ class UserListView(LoginRequiredMixin,PaginationMixin,ListView):
         return context
     def delete(self,request,*args,**kwargs):
         try:
-            user = self.model.objects.get(pk=QueryDict((request.body)))
+            user = self.model.objects.get(pk=QueryDict((request.body))["id"])
             #user = self.model.objects.get(pk=QueryDict((request.body))["id"]).delete()
-            username = user[0].username
+            username = user.username
             user_id = gl.users.search(username)[0].id
             gl.users.delete(user_id)
             user.delete()
             ret = {"code": 0, "result": "删除用户成功", "next_url": self.next_url}
         except Exception as e:
-            ret = {"code": 1, "errmsg": "删除用户失败,%s" , "next_url": self.next_url}
+            ret = {"code": 1, "errmsg": "删除用户失败,%s"%e.msg , "next_url": self.next_url}
         #return render(request,settings.JUMP_PAGE,ret)
         return JsonResponse(ret, safe=True)
 

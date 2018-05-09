@@ -78,7 +78,7 @@
                 <td class="text-center">{{ project.apply_time}}</td>
                 <td class="text-center">
                     {% if request.user.id == project.assigned_to_id %}
-                        <a href="{% url 'deploy:deploy'  project.id  %}" class="btn btn-xs btn-info">{% if project.status == 0 %}仿真{% elif project.status == 1 %}上线{% endif %}</a>
+                        <a href="{% url 'deploy:deploy'  project.id  %}" class="btn btn-xs btn-info">{% if project.status == 0 %}灰度{% elif project.status == 1 %}上线{% endif %}</a>
                     {% else %}
                         <a href="{% url 'deploy:deploy'  project.id %}" class="btn btn-xs btn-info">详情</a>
                     {% endif %}

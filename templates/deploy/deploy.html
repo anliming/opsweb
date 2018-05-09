@@ -56,7 +56,7 @@
                 <a>申请中</a>
             </li>
             <li class="{% if deploy.status >= 1 %}active{% endif %}">
-                <a>仿真</a>
+                <a>灰度</a>
             </li>
             <li class="{% if deploy.status >= 2%}active{% endif %}">
                 <a>上线完成</a>
@@ -109,7 +109,7 @@
             <div class="col-sm-4 col-sm-offset-2">
             {% if request.user.id == deploy.assigned_to_id %}
                 {% if deploy.status == 0 %}
-                    <button  class="btn btn-primary" type="submit">仿真</button>
+                    <button  class="btn btn-primary" type="submit">灰度</button>
                 {% elif deploy.status == 1 %}
                     <button  class="btn btn-primary" type="submit">上线</button>
                 {% elif deploy.status == 2 %}
