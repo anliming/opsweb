@@ -104,7 +104,6 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         pk = self.kwargs.get(self.pk_url_kwarg)
         p = self.model.objects.get(pk=pk)
         host_list = p.host_set.all()
-        print host_list
         return host_list
 
 

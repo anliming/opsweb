@@ -43,9 +43,11 @@ class GroupListView(LoginRequiredMixin,PaginationMixin,ListView):
             if group.user_set.all() or group.permissions.all():
                 ret = {"code": 1, "errmsg": "角色有成员或有权限在内"}
             else:
-                groupname = group[0].name
-                group_id = gl.groups.search(groupname)[0].id
-                gl.groups.delete(group_id)
+                #groupname = group[0].name
+                groupname = group.name
+                #group_id = gl.groups.search(groupname)[0].id
+                #print(groupname,group_id)
+                #gl.groups.delete(group_id)
                 group.delete()
                 ret = {"code":0,"result":"删除角色成功"}
         except Exception as e:
