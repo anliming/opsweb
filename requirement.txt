@@ -1,6 +1,9 @@
 ansible==1.9.6
 Django==1.11.8
 django-pure-pagination
+django-celery
+django-otp
+qrcode
 MySQL-python
-python-gitlab
+python-gitlab==0.20
 requests
