@@ -7,9 +7,8 @@ from aliyunsdkecs.request.v20140526 import StopInstanceRequest
 
 # 创建AcsClient实例
 client = AcsClient(
-   "LTAInpnHZTLJSu0S",
-   "IQqg3P4hbjCxvV8OQkqci6OpOwxRzv",
-   "cn-hongkong"
+   "LTAInpn",
+   "IQqg3P4hbjOQkwxRzvkong"
 );
 # 创建request，并设置参数
 request = DescribeInstancesRequest.DescribeInstancesRequest()
