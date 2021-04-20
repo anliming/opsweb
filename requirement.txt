@@ -1,4 +1,4 @@
-ansible==1.9.6
+ansible==2.9.20
 Django==1.11.29
 django-pure-pagination
 django-celery
